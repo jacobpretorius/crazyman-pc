@@ -1,6 +1,6 @@
 <template>
   <div class="BusOutput">
-    <button @click="handleButtonClick">FULL RESET STATE</button>
+    <h1>Bus Output</h1>
 
     <div class="Input-Area">
       <input
@@ -12,6 +12,9 @@
         :class="{ lineHigh : busLine === 1 }"
       />
     </div>
+
+    <button @click="handleResetBus">RESET STATE</button>
+    <button @click="handleTestState">TEST STATE</button>
   </div>
 </template>
 
@@ -25,9 +28,13 @@ export default {
   },
   methods: {
     ...mapMutations({
-      fullSetBus: "FULL_SET_BUS"
+      fullSetBus: "FULL_SET_BUS",
+      resetBus: "RESET_BUS",
     }),
-    handleButtonClick() {
+    handleResetBus() {
+      this.resetBus();
+    },
+    handleTestState() {
       this.fullSetBus([1, 1, 1, 1, 0, 0, 0, 0]);
     }
   }
@@ -49,6 +56,12 @@ export default {
         border: 2px solid $color-eucalyptus;
       }
     }
+  }
+
+  button {
+    padding: 0 2px;
+    margin: 0 2px;
+    border: 1px solid $color-gunmetal;
   }
 }
 </style>

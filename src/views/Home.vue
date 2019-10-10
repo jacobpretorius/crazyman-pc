@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 import CpuContainer from "@/components/CpuContainer/CpuContainer.vue";
 
@@ -17,5 +17,19 @@ export default {
   computed: mapState({
     items: state => state
   }),
+  methods: {
+    ...mapMutations({
+      resetBus: "RESET_BUS"
+    }),
+  },
+  created() {
+    this.resetBus();
+  },
 };
 </script>
+
+<style lang="scss">
+.home {
+  @apply px-8;
+}
+</style>

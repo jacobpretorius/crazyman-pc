@@ -1,6 +1,7 @@
 <template>
 <div class="cpu-container">
   <p>This is the CPU</p>
+  <br />
   <BusOutput />
 </div>
   
