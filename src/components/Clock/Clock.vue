@@ -1,0 +1,77 @@
+<template>
+  <div class="Clock">
+    <h1>Clock</h1>
+
+    <div class="led" :class="{ on : this.clockHigh }"></div>
+
+    <button @click="handlePulse">PULSE</button>
+    <button @click="handleRun">RUN</button>
+    <button @click="handleStop">STOP</button>
+  </div>
+</template>
+
+<script>
+import { mapState, mapMutations } from "vuex";
+
+export default {
+  name: "Clock",
+  data: function() {
+    return {
+      clockIntervals: []
+    };
+  },
+  computed: {
+    ...mapState(["bus", "clockHigh"])
+  },
+  methods: {
+    ...mapMutations({
+      setClockState: "SET_CLOCK_STATE"
+    }),
+    handlePulse() {
+      this.sendHighLowClockPulse();
+    },
+    handleRun() {
+      this.sendHighLowClockPulse();
+      var timer = window.setInterval(() => {
+        this.sendHighLowClockPulse();
+      }, 1000);
+
+      this.clockIntervals.push(timer);
+    },
+    handleStop() {
+      this.clockIntervals.forEach(timer => {
+        clearInterval(timer);
+      });
+    },
+    sendHighLowClockPulse() {
+      this.setClockState(true);
+
+      window.setTimeout(() => {
+        this.setClockState(false);
+      }, 500);
+    }
+  }
+};
+</script>
+
+<style scoped lang="scss">
+.Clock {
+  .led {
+    width: 20px;
+    height: 20px;
+    background-color: $color-gunmetal;
+    padding: 0 2px;
+    margin: 2px 2px 5px 2px;
+  }
+
+  .on {
+    background-color: $color-eucalyptus;
+  }
+
+  button {
+    padding: 0 2px;
+    margin: 0 2px;
+    border: 1px solid $color-gunmetal;
+  }
+}
+</style>
