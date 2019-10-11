@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     bus: [],
+    registers: {},
     clockHigh: false,
   },
   mutations: {
@@ -25,10 +26,21 @@ export default new Vuex.Store({
     SET_CLOCK_STATE: (state, pulse) => {
       Vue.set(state, 'clockHigh', pulse);
     },
+
+    // REGISTERS
+    SET_REGISTER: (state, payload) => {
+      Vue.set(state.registers, payload.registerName, payload.updatedRegister);
+    },
+    RESET_REGISTER: (state, registerName) => {
+      Vue.set(state.registers, registerName, [0,0,0,0,0,0,0,0]);
+    },
   },
   getters: {
     getBus(state) {
       return state.bus;
+    },
+    getRegisters(state) {
+      return state.registers;
     },
   },
 });

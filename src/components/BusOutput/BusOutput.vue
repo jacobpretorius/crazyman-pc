@@ -8,13 +8,14 @@
         v-for="(busLine, index) in bus"
         :key="index"
         :value="busLine"
+        @keypress="checkValueValidBinaryChar"
         class="Bus-Line"
         :class="{ lineHigh : busLine === 1 }"
       />
     </div>
 
-    <button @click="handleResetBus">RESET STATE</button>
-    <button @click="handleTestState">TEST STATE</button>
+    <button @click="handleResetBus">RESET BUS</button>
+    <button @click="handleTestState">TEST BUS</button>
   </div>
 </template>
 
@@ -29,20 +30,33 @@ export default {
   methods: {
     ...mapMutations({
       fullSetBus: "FULL_SET_BUS",
-      resetBus: "RESET_BUS",
+      resetBus: "RESET_BUS"
     }),
     handleResetBus() {
       this.resetBus();
     },
     handleTestState() {
       this.fullSetBus([1, 1, 1, 1, 0, 0, 0, 0]);
+    },
+    checkValueValidBinaryChar(event) {
+      if (event.key === "1" || event.key === "0") {
+        return;
+      }
+      event.preventDefault();
     }
+  },
+  created() {
+    this.resetBus();
   }
 };
 </script>
 
 <style scoped lang="scss">
 .BusOutput {
+  border: 2px solid $color-eucalyptus;
+  padding: 5px;
+  margin: 5px;
+
   .Input-Area {
     display: flex;
 
@@ -52,7 +66,7 @@ export default {
       margin: 2px;
       border: 2px solid $color-gunmetal;
 
-      &.lineHigh{
+      &.lineHigh {
         border: 2px solid $color-eucalyptus;
       }
     }

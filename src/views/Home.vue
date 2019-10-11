@@ -5,25 +5,12 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-
 import CpuContainer from "@/components/CpuContainer/CpuContainer.vue";
 
 export default {
   name: "home",
   components: {
     CpuContainer
-  },
-  computed: mapState({
-    items: state => state
-  }),
-  methods: {
-    ...mapMutations({
-      resetBus: "RESET_BUS"
-    }),
-  },
-  created() {
-    this.resetBus();
   },
 };
 </script>

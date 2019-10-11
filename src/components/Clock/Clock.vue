@@ -4,9 +4,9 @@
 
     <div class="led" :class="{ on : this.clockHigh }"></div>
 
-    <button @click="handlePulse">PULSE</button>
     <button @click="handleRun">RUN</button>
     <button @click="handleStop">STOP</button>
+    <button @click="handlePulse">PULSE</button>
   </div>
 </template>
 
@@ -56,6 +56,10 @@ export default {
 
 <style scoped lang="scss">
 .Clock {
+  border: 2px solid $color-eucalyptus;
+  padding: 5px;
+  margin: 5px;
+
   .led {
     width: 20px;
     height: 20px;
