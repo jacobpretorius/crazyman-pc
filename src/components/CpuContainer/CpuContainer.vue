@@ -6,24 +6,24 @@
       <BusOutput class="bus-output" />
       <Clock class="clock" />
 
-      <Register class="register" register-name="A"/>
-      <Register class="register" register-name="B"/>
+      <Register class="register" register-name="A" />
+      <Register class="register" register-name="B" />
 
-      <BinaryAdder class="binary-adder"/>
+      <BinaryAdder class="binary-adder" />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
-import BusOutput from "../BusOutput/BusOutput.vue";
-import Clock from "../Clock/Clock.vue";
-import Register from "../Register/Register.vue";
-import BinaryAdder from "../BinaryAdder/BinaryAdder.vue";
+import BusOutput from '../BusOutput/BusOutput.vue';
+import Clock from '../Clock/Clock.vue';
+import Register from '../Register/Register.vue';
+import BinaryAdder from '../BinaryAdder/BinaryAdder.vue';
 
 export default {
-  name: "CpuContainer",
+  name: 'CpuContainer',
   components: {
     BusOutput,
     Clock,
@@ -31,7 +31,7 @@ export default {
     BinaryAdder,
   },
   computed: mapState({
-    items: state => state
+    items: (state) => state,
   }),
 };
 </script>

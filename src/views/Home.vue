@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import CpuContainer from "@/components/CpuContainer/CpuContainer.vue";
+import CpuContainer from '@/components/CpuContainer/CpuContainer.vue';
 
 export default {
-  name: "home",
+  name: 'home',
   components: {
-    CpuContainer
+    CpuContainer,
   },
 };
 </script>

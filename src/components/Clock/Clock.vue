@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations } from 'vuex';
 
 export default {
-  name: "Clock",
+  name: 'Clock',
   data: function() {
     return {
       clockIntervals: [],
@@ -22,11 +22,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["bus", "clockHigh"])
+    ...mapState(['bus', 'clockHigh']),
   },
   methods: {
     ...mapMutations({
-      setClockState: "SET_CLOCK_STATE"
+      setClockState: 'SET_CLOCK_STATE',
     }),
     handlePulse() {
       this.sendHighLowClockPulse();
@@ -42,7 +42,7 @@ export default {
     },
     handleStop() {
       this.clockRunning = false;
-      this.clockIntervals.forEach(timer => {
+      this.clockIntervals.forEach((timer) => {
         clearInterval(timer);
       });
     },
@@ -52,8 +52,8 @@ export default {
       window.setTimeout(() => {
         this.setClockState(false);
       }, 500);
-    }
-  }
+    },
+  },
 };
 </script>
 

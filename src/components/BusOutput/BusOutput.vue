@@ -20,17 +20,17 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations } from 'vuex';
 
 export default {
-  name: "BusOutput",
+  name: 'BusOutput',
   computed: {
-    ...mapState(["bus"])
+    ...mapState(['bus']),
   },
   methods: {
     ...mapMutations({
-      fullSetBus: "FULL_SET_BUS",
-      resetBus: "RESET_BUS"
+      fullSetBus: 'FULL_SET_BUS',
+      resetBus: 'RESET_BUS',
     }),
     handleResetBus() {
       this.resetBus();
@@ -39,15 +39,15 @@ export default {
       this.fullSetBus([1, 1, 1, 1, 0, 0, 0, 0]);
     },
     checkValueValidBinaryChar(event) {
-      if (event.key === "1" || event.key === "0") {
+      if (event.key === '1' || event.key === '0') {
         return;
       }
       event.preventDefault();
-    }
+    },
   },
   created() {
     this.resetBus();
-  }
+  },
 };
 </script>
 

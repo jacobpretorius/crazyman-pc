@@ -20,47 +20,47 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from "vuex";
+import { mapState, mapMutations, mapGetters } from 'vuex';
 
 export default {
-  name: "Register",
+  name: 'Register',
   props: {
     registerName: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
   computed: {
-    ...mapState(["bus"]),
-    ...mapGetters(["getRegisters"]),
+    ...mapState(['bus']),
+    ...mapGetters(['getRegisters']),
     register: function() {
       return this.getRegisters[this.registerName];
-    }
+    },
   },
   methods: {
     ...mapMutations({
-      setRegister: "SET_REGISTER",
-      resetRegister: "RESET_REGISTER"
+      setRegister: 'SET_REGISTER',
+      resetRegister: 'RESET_REGISTER',
     }),
     handleClearRegister() {
       this.resetRegister(this.registerName);
     },
     handleTestRegister() {
-      this.setRegister({ 
+      this.setRegister({
         registerName: this.registerName,
-        updatedRegister: [1, 1, 1, 1, 0, 0, 0, 0] 
+        updatedRegister: [1, 1, 1, 1, 0, 0, 0, 0],
       });
     },
     checkValueValidBinaryChar(event) {
-      if (event.key === "1" || event.key === "0") {
+      if (event.key === '1' || event.key === '0') {
         return;
       }
       event.preventDefault();
-    }
+    },
   },
   created() {
     this.resetRegister(this.registerName);
-  }
+  },
 };
 </script>
 

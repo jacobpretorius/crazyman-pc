@@ -1,5 +1,5 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue';
+import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
@@ -18,13 +18,13 @@ export default new Vuex.Store({
       // state.bus = updatedBus;
       Vue.set(state, state.bus, updatedBus.reverse());
     },
-    RESET_BUS: state => {
-      Vue.set(state, "bus", [...[0, 0, 0, 0, 0, 0, 0, 0]]);
+    RESET_BUS: (state) => {
+      Vue.set(state, 'bus', [...[0, 0, 0, 0, 0, 0, 0, 0]]);
     },
 
     // CLOCK
     SET_CLOCK_STATE: (state, pulse) => {
-      Vue.set(state, "clockHigh", pulse);
+      Vue.set(state, 'clockHigh', pulse);
     },
 
     // REGISTERS
@@ -33,7 +33,7 @@ export default new Vuex.Store({
     },
     RESET_REGISTER: (state, registerName) => {
       Vue.set(state.registers, registerName, [0, 0, 0, 0, 0, 0, 0, 0]);
-    }
+    },
   },
   getters: {
     getBus(state) {
@@ -41,6 +41,6 @@ export default new Vuex.Store({
     },
     getRegisters(state) {
       return state.registers;
-    }
-  }
+    },
+  },
 });
