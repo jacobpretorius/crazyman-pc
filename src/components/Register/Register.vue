@@ -2,8 +2,12 @@
   <div class="Register">
     <h1>Register {{ registerName }}</h1>
 
-    <div class="led" :class="{ write : this.writeEnabledLED }"></div>
-    <div class="led" :class="{ read : this.readEnabledLED }"></div>
+    <div class="led" :class="{ write : this.writeEnabledLED }">
+      <span>w</span>
+    </div>
+    <div class="led" :class="{ read : this.readEnabledLED }">
+      <span>r</span>
+    </div>
 
     <div class="Input-Area">
       <input
@@ -64,7 +68,6 @@ export default {
     },
     writeRegisterToBus() {
       this.blinkWriteEnabledLed();
-      console.log(this.register);
       this.fullSetBus(this.register);
     },
     handleClearRegister() {
@@ -129,6 +132,14 @@ export default {
     float: right;
     border-radius: 10px;
     opacity: 0.5;
+    text-align: center;
+    color: white;
+
+    :first-child {
+      vertical-align: top;
+      top: -2px;
+      position: relative;
+    }
   }
 
   .read {

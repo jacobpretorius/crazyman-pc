@@ -2,13 +2,14 @@
   <div class="BinaryAdder">
     <h1>Binary Adder</h1>
 
-    <button @click="handleActive" :class="{ active : adderRunning }">ACTIVE</button>
+    <button @click="handleActive" :class="{ active : adderRunning }">ENABLE</button>
     <button @click="handleStop">STOP</button>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations, mapGetters } from 'vuex';
+import { arrayToBase10, base10ToArray } from '../../utils/BusConversions.js';
 
 export default {
   name: 'BinaryAdder',
@@ -37,38 +38,14 @@ export default {
     clockHigh: function() {
       if (this.adderRunning) {
         if (this.clockHigh) {
-          var bus = this.getBus;
+          var busAsBase10 = arrayToBase10(this.getBus);
 
-          // Safely get the full bus values
-          var str = '';
-          for (let i = 0; i < bus.length; i++) {
-            if (bus[i]) {
-              if (bus[i] === 1) {
-                str = str + '1';
-              } else {
-                str = str + '0';
-              }
-            } else {
-              str = str + '0';
-            }
-          }
-
-          // Convert to bas 10 and add 1
-          var busAsBase10 = parseInt(str, 2);
+          // Add 1 to converted bus
           busAsBase10 = busAsBase10 + 1;
-          // Convert result back to base 2
-          var updatedBusAsBase2 = busAsBase10.toString(2);
-          updatedBusAsBase2 = updatedBusAsBase2.split('').reverse();
 
-          // Update original bus safely
-          for (let j = 0; j < bus.length; j++) {
-            if (updatedBusAsBase2[j]) {
-              bus[j] = updatedBusAsBase2[j] === '1' ? 1 : 0;
-            } else {
-              bus[j] = 0;
-            }
-          }
-          this.fullSetBus(bus.reverse());
+          this.fullSetBus(
+            base10ToArray(busAsBase10, this.getBus.length),
+          );
         }
       }
     },
