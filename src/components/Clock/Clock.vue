@@ -4,7 +4,7 @@
 
     <div class="led" :class="{ on : this.clockHigh }"></div>
 
-    <button @click="handleRun">RUN</button>
+    <button @click="handleRun" :class="{ on : clockRunning }">RUN</button>
     <button @click="handleStop">STOP</button>
     <button @click="handlePulse">PULSE</button>
   </div>
@@ -17,7 +17,8 @@ export default {
   name: "Clock",
   data: function() {
     return {
-      clockIntervals: []
+      clockIntervals: [],
+      clockRunning: false,
     };
   },
   computed: {
@@ -31,6 +32,7 @@ export default {
       this.sendHighLowClockPulse();
     },
     handleRun() {
+      this.clockRunning = true;
       this.sendHighLowClockPulse();
       var timer = window.setInterval(() => {
         this.sendHighLowClockPulse();
@@ -39,6 +41,7 @@ export default {
       this.clockIntervals.push(timer);
     },
     handleStop() {
+      this.clockRunning = false;
       this.clockIntervals.forEach(timer => {
         clearInterval(timer);
       });
@@ -74,7 +77,7 @@ export default {
 
   button {
     padding: 0 2px;
-    margin: 0 2px;
+    margin: 2px;
     border: 1px solid $color-gunmetal;
   }
 }

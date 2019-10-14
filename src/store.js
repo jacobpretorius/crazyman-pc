@@ -10,21 +10,21 @@ export default new Vuex.Store({
     clockHigh: false,
   },
   mutations: {
-
     // BUS
     FULL_SET_BUS: (state, updatedBus) => {
-      Vue.set(state, 'bus', [...updatedBus]);
-    },
-    FULL_SET_BUS_LINE: (state, line, value) => {
-      Vue.set(state, 'bus', [...(state.bus[line] = value)]);
+      // for (let i = updatedBus.length; i >= 0; i--) {
+      //   Vue.set(state, i, updatedBus[i]);
+      // }
+      // state.bus = updatedBus;
+      Vue.set(state, state.bus, updatedBus.reverse());
     },
     RESET_BUS: state => {
-      Vue.set(state, 'bus', [...[0,0,0,0,0,0,0,0]]);
+      Vue.set(state, "bus", [...[0, 0, 0, 0, 0, 0, 0, 0]]);
     },
 
     // CLOCK
     SET_CLOCK_STATE: (state, pulse) => {
-      Vue.set(state, 'clockHigh', pulse);
+      Vue.set(state, "clockHigh", pulse);
     },
 
     // REGISTERS
@@ -32,8 +32,8 @@ export default new Vuex.Store({
       Vue.set(state.registers, payload.registerName, payload.updatedRegister);
     },
     RESET_REGISTER: (state, registerName) => {
-      Vue.set(state.registers, registerName, [0,0,0,0,0,0,0,0]);
-    },
+      Vue.set(state.registers, registerName, [0, 0, 0, 0, 0, 0, 0, 0]);
+    }
   },
   getters: {
     getBus(state) {
@@ -41,6 +41,6 @@ export default new Vuex.Store({
     },
     getRegisters(state) {
       return state.registers;
-    },
-  },
+    }
+  }
 });

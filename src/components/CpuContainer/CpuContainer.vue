@@ -8,6 +8,8 @@
 
       <Register class="register" register-name="A"/>
       <Register class="register" register-name="B"/>
+
+      <BinaryAdder class="binary-adder"/>
     </div>
   </div>
 </template>
@@ -18,6 +20,7 @@ import { mapState } from "vuex";
 import BusOutput from "../BusOutput/BusOutput.vue";
 import Clock from "../Clock/Clock.vue";
 import Register from "../Register/Register.vue";
+import BinaryAdder from "../BinaryAdder/BinaryAdder.vue";
 
 export default {
   name: "CpuContainer",
@@ -25,6 +28,7 @@ export default {
     BusOutput,
     Clock,
     Register,
+    BinaryAdder,
   },
   computed: mapState({
     items: state => state
@@ -47,6 +51,10 @@ export default {
 
     .register {
       @apply w-1/3;
+    }
+
+    .binary-adder {
+      @apply w-1/5;
     }
   }
 }

@@ -87,7 +87,7 @@ export default {
 
   button {
     padding: 0 2px;
-    margin: 0 2px;
+    margin: 2px;
     border: 1px solid $color-gunmetal;
   }
 }
