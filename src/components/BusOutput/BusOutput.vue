@@ -6,9 +6,9 @@
       <input
         type="text"
         v-for="(busLine, index) in bus"
-        :key="index"
+        :key="`busline-${index}`"
         :value="busLine"
-        @keypress="checkValueValidBinaryChar"
+        @keypress="checkValueValidBinaryChar(index, $event)"
         class="Bus-Line"
         :class="{ lineHigh : busLine === 1 }"
       />
@@ -30,6 +30,7 @@ export default {
   methods: {
     ...mapMutations({
       fullSetBus: 'FULL_SET_BUS',
+      updateBus: 'UPDATE_BUS',
       resetBus: 'RESET_BUS',
     }),
     handleResetBus() {
@@ -38,11 +39,13 @@ export default {
     handleTestState() {
       this.fullSetBus([1, 1, 1, 1, 0, 0, 0, 0]);
     },
-    checkValueValidBinaryChar(event) {
+    checkValueValidBinaryChar(busline, event) {
       if (event.key === '1' || event.key === '0') {
+        this.updateBus({ index : busline, value : event.key });
         return;
+      }else{
+        event.preventDefault();
       }
-      event.preventDefault();
     },
   },
   created() {

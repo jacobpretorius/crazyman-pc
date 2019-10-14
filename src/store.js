@@ -14,6 +14,11 @@ export default new Vuex.Store({
     FULL_SET_BUS: (state, updatedBus) => {
       Vue.set(state, 'bus', updatedBus.slice());
     },
+    UPDATE_BUS: (state, payload) => {
+      var updatedBus = [...state.bus];
+      updatedBus[payload.index] = parseInt(payload.value);
+      Vue.set(state, 'bus', updatedBus.slice());
+    },
     RESET_BUS: (state) => {
       Vue.set(state, 'bus', [...[0, 0, 0, 0, 0, 0, 0, 0]]);
     },

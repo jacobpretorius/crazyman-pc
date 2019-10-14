@@ -1,6 +1,6 @@
 <template>
   <div class="Register">
-    <h1>Register {{ registerName }}</h1> 
+    <h1>Register {{ registerName }}</h1>
 
     <div class="led" :class="{ write : this.writeEnabledLED }"></div>
     <div class="led" :class="{ read : this.readEnabledLED }"></div>
@@ -9,9 +9,9 @@
       <input
         type="text"
         v-for="(registerLine, index) in register"
-        :key="index"
+        :key="`register-${registerName}-${index}`"
         :value="registerLine"
-        @keypress="checkValueValidBinaryChar"
+        @keypress="checkValueValidBinaryChar(index, $event)"
         class="Bus-Line"
         :class="{ lineHigh : registerLine === 1 }"
       />
@@ -40,7 +40,7 @@ export default {
       writeEnabled: false,
       readEnabledLED: false,
       writeEnabledLED: false,
-    }
+    };
   },
   computed: {
     ...mapState(['bus', 'clockHigh']),
@@ -70,8 +70,15 @@ export default {
     handleClearRegister() {
       this.resetRegister(this.registerName);
     },
-    checkValueValidBinaryChar(event) {
+    checkValueValidBinaryChar(index, event) {
       if (event.key === '1' || event.key === '0') {
+        var updatedRegister = [...this.register];
+        updatedRegister[index] = parseInt(event.key);
+
+        this.setRegister({
+          registerName: this.registerName,
+          updatedRegister,
+        });
         return;
       }
       event.preventDefault();
@@ -121,7 +128,7 @@ export default {
     margin: 2px 2px 5px 2px;
     float: right;
     border-radius: 10px;
-    opacity: .5;
+    opacity: 0.5;
   }
 
   .read {
