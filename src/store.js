@@ -12,11 +12,7 @@ export default new Vuex.Store({
   mutations: {
     // BUS
     FULL_SET_BUS: (state, updatedBus) => {
-      // for (let i = updatedBus.length; i >= 0; i--) {
-      //   Vue.set(state, i, updatedBus[i]);
-      // }
-      // state.bus = updatedBus;
-      Vue.set(state, state.bus, updatedBus.reverse());
+      Vue.set(state, 'bus', updatedBus.slice());
     },
     RESET_BUS: (state) => {
       Vue.set(state, 'bus', [...[0, 0, 0, 0, 0, 0, 0, 0]]);

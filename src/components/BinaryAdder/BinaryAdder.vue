@@ -63,16 +63,12 @@ export default {
           // Update original bus safely
           for (let j = 0; j < bus.length; j++) {
             if (updatedBusAsBase2[j]) {
-              if (updatedBusAsBase2[j] === '1') {
-                bus[j] = 1;
-              } else {
-                bus[j] = 0;
-              }
+              bus[j] = updatedBusAsBase2[j] === '1' ? 1 : 0;
             } else {
               bus[j] = 0;
             }
           }
-          this.fullSetBus(bus);
+          this.fullSetBus(bus.reverse());
         }
       }
     },

@@ -1,6 +1,9 @@
 <template>
   <div class="Register">
-    <h1>Register {{ registerName }}</h1>
+    <h1>Register {{ registerName }}</h1> 
+
+    <div class="led" :class="{ write : this.writeEnabledLED }"></div>
+    <div class="led" :class="{ read : this.readEnabledLED }"></div>
 
     <div class="Input-Area">
       <input
@@ -14,8 +17,9 @@
       />
     </div>
 
-    <button @click="handleClearRegister">RESET REGISTER</button>
-    <button @click="handleTestRegister">TEST REGISTER</button>
+    <button @click="handleClearRegister">RESET</button>
+    <button @click="loadRegisterFromBus">READ</button>
+    <button @click="writeRegisterToBus">WRITE</button>
   </div>
 </template>
 
@@ -30,9 +34,17 @@ export default {
       default: '',
     },
   },
+  data: function() {
+    return {
+      readEnabled: false,
+      writeEnabled: false,
+      readEnabledLED: false,
+      writeEnabledLED: false,
+    }
+  },
   computed: {
-    ...mapState(['bus']),
-    ...mapGetters(['getRegisters']),
+    ...mapState(['bus', 'clockHigh']),
+    ...mapGetters(['getRegisters', 'getBus']),
     register: function() {
       return this.getRegisters[this.registerName];
     },
@@ -41,21 +53,48 @@ export default {
     ...mapMutations({
       setRegister: 'SET_REGISTER',
       resetRegister: 'RESET_REGISTER',
+      fullSetBus: 'FULL_SET_BUS',
     }),
-    handleClearRegister() {
-      this.resetRegister(this.registerName);
-    },
-    handleTestRegister() {
+    loadRegisterFromBus() {
+      this.blinkReadEnabledLed();
       this.setRegister({
         registerName: this.registerName,
-        updatedRegister: [1, 1, 1, 1, 0, 0, 0, 0],
+        updatedRegister: [...this.getBus],
       });
+    },
+    writeRegisterToBus() {
+      this.blinkWriteEnabledLed();
+      console.log(this.register);
+      this.fullSetBus(this.register);
+    },
+    handleClearRegister() {
+      this.resetRegister(this.registerName);
     },
     checkValueValidBinaryChar(event) {
       if (event.key === '1' || event.key === '0') {
         return;
       }
       event.preventDefault();
+    },
+    blinkReadEnabledLed() {
+      this.readEnabledLED = true;
+      window.setTimeout(() => {
+        this.readEnabledLED = false;
+      }, 350);
+    },
+    blinkWriteEnabledLed() {
+      this.writeEnabledLED = true;
+      window.setTimeout(() => {
+        this.writeEnabledLED = false;
+      }, 350);
+    },
+  },
+  watch: {
+    clockHigh: function() {
+      // Read from BUS
+      if (this.readEnabled) {
+        this.loadRegisterFromBus();
+      }
     },
   },
   created() {
@@ -66,9 +105,34 @@ export default {
 
 <style scoped lang="scss">
 .Register {
+  h1 {
+    display: inline-block;
+  }
+
   border: 2px solid $color-eucalyptus;
   padding: 5px;
   margin: 5px;
+
+  .led {
+    width: 20px;
+    height: 20px;
+    background-color: $color-gunmetal;
+    padding: 0 2px;
+    margin: 2px 2px 5px 2px;
+    float: right;
+    border-radius: 10px;
+    opacity: .5;
+  }
+
+  .read {
+    background-color: $color-electric-blue;
+    opacity: 1;
+  }
+
+  .write {
+    background-color: $color-Red;
+    opacity: 1;
+  }
 
   .Input-Area {
     display: flex;

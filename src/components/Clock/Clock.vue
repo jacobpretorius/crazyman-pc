@@ -67,12 +67,15 @@ export default {
     width: 20px;
     height: 20px;
     background-color: $color-gunmetal;
+    opacity: .5;
     padding: 0 2px;
     margin: 2px 2px 5px 2px;
+    border-radius: 10px;
   }
 
   .on {
     background-color: $color-eucalyptus;
+    opacity: 1;
   }
 
   button {

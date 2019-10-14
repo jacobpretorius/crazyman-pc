@@ -14,8 +14,8 @@
       />
     </div>
 
-    <button @click="handleResetBus">RESET BUS</button>
-    <button @click="handleTestState">TEST BUS</button>
+    <button @click="handleResetBus">RESET</button>
+    <button @click="handleTestState">TEST</button>
   </div>
 </template>
 
