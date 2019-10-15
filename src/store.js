@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    bus: [],
+    bus: [false, false, false, false, false, false, false, false],
     registers: {},
     clockHigh: false,
   },
@@ -20,7 +20,9 @@ export default new Vuex.Store({
       Vue.set(state, 'bus', updatedBus.slice());
     },
     RESET_BUS: (state) => {
-      Vue.set(state, 'bus', [...[0, 0, 0, 0, 0, 0, 0, 0]]);
+      Vue.set(state, 'bus', [
+        ...[false, false, false, false, false, false, false, false],
+      ]);
     },
 
     // CLOCK
@@ -33,7 +35,16 @@ export default new Vuex.Store({
       Vue.set(state.registers, payload.registerName, payload.updatedRegister);
     },
     RESET_REGISTER: (state, registerName) => {
-      Vue.set(state.registers, registerName, [0, 0, 0, 0, 0, 0, 0, 0]);
+      Vue.set(state.registers, registerName, [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ]);
     },
   },
   getters: {

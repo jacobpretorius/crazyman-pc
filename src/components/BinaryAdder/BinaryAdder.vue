@@ -58,6 +58,7 @@ export default {
   border: 2px solid $color-eucalyptus;
   padding: 5px;
   margin: 5px;
+  min-width: 88px;
 
   .active {
     background-color: $color-eucalyptus;

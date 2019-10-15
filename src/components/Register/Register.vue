@@ -14,10 +14,10 @@
         type="text"
         v-for="(registerLine, index) in register"
         :key="`register-${registerName}-${index}`"
-        :value="registerLine"
+        :value="registerLine === true ? 1 : 0"
         @keypress="checkValueValidBinaryChar(index, $event)"
         class="Bus-Line"
-        :class="{ lineHigh : registerLine === 1 }"
+        :class="{ lineHigh : registerLine === true }"
       />
     </div>
 
@@ -76,7 +76,7 @@ export default {
     checkValueValidBinaryChar(index, event) {
       if (event.key === '1' || event.key === '0') {
         var updatedRegister = [...this.register];
-        updatedRegister[index] = parseInt(event.key);
+        updatedRegister[index] = event.key === '1' ? true : false;
 
         this.setRegister({
           registerName: this.registerName,
@@ -122,6 +122,7 @@ export default {
   border: 2px solid $color-eucalyptus;
   padding: 5px;
   margin: 5px;
+  min-width: 206px;
 
   .led {
     width: 20px;

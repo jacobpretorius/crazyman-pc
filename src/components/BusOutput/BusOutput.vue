@@ -6,51 +6,38 @@
       <input
         type="text"
         v-for="(busLine, index) in bus"
-        :key="`busline-${index}`"
-        :value="busLine"
-        @keypress="checkValueValidBinaryChar(index, $event)"
+        :key="index"
+        :value="busLine === true ? 1 : 0"
         class="Bus-Line"
-        :class="{ lineHigh : busLine === 1 }"
+        :class="{ lineHigh : busLine === true }"
       />
     </div>
 
-    <button @click="handleResetBus">RESET</button>
-    <button @click="handleTestState">TEST</button>
+    <button @click="handleResetBus">RESET STATE</button>
+    <button @click="handleTestState">TEST STATE</button>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations } from "vuex";
 
 export default {
-  name: 'BusOutput',
+  name: "BusOutput",
   computed: {
-    ...mapState(['bus']),
+    ...mapState(["bus"])
   },
   methods: {
     ...mapMutations({
-      fullSetBus: 'FULL_SET_BUS',
-      updateBus: 'UPDATE_BUS',
-      resetBus: 'RESET_BUS',
+      fullSetBus: "FULL_SET_BUS",
+      resetBus: "RESET_BUS",
     }),
     handleResetBus() {
       this.resetBus();
     },
     handleTestState() {
-      this.fullSetBus([1, 1, 1, 1, 0, 0, 0, 0]);
-    },
-    checkValueValidBinaryChar(busline, event) {
-      if (event.key === '1' || event.key === '0') {
-        this.updateBus({ index : busline, value : event.key });
-        return;
-      }else{
-        event.preventDefault();
-      }
-    },
-  },
-  created() {
-    this.resetBus();
-  },
+      this.fullSetBus([false, true, false, true, false, true, false, true]);
+    }
+  }
 };
 </script>
 
@@ -59,7 +46,8 @@ export default {
   border: 2px solid $color-eucalyptus;
   padding: 5px;
   margin: 5px;
-
+  min-width: 205px;
+  
   .Input-Area {
     display: flex;
 
@@ -69,7 +57,7 @@ export default {
       margin: 2px;
       border: 2px solid $color-gunmetal;
 
-      &.lineHigh {
+      &.lineHigh{
         border: 2px solid $color-eucalyptus;
       }
     }

@@ -62,6 +62,7 @@ export default {
   border: 2px solid $color-eucalyptus;
   padding: 5px;
   margin: 5px;
+  min-width: 112px;
 
   .led {
     width: 20px;

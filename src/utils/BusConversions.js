@@ -3,7 +3,7 @@ function arrayToBase10(array) {
   var str = '';
   for (let i = 0; i < array.length; i++) {
     if (array[i]) {
-      if (array[i] === 1) {
+      if (array[i] === true) {
         str = str + '1';
       } else {
         str = str + '0';
@@ -29,9 +29,9 @@ function base10ToArray(value, expectedArrSize) {
   // safely build the result bus array
   for (let j = 0; j < expectedArrSize; j++) {
     if (valueBase2[j]) {
-      resultArr[j] = valueBase2[j] === '1' ? 1 : 0;
+      resultArr[j] = valueBase2[j] === '1' ? true : false;
     } else {
-      resultArr[j] = 0;
+      resultArr[j] = false;
     }
   }
 
