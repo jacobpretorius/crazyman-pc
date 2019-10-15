@@ -1,4 +1,4 @@
-function arrayToBase10(array) {
+function boolArrayToBase10(array) {
   // Safely get the full bus values
   var str = '';
   for (let i = 0; i < array.length; i++) {
@@ -17,7 +17,7 @@ function arrayToBase10(array) {
   return parseInt(str, 2);
 }
 
-function base10ToArray(value, expectedArrSize) {
+function base10ToBoolArray(value, expectedArrSize) {
   // Convert result to base 2 and reverse for our bus format
   var valueBase2 = value
     .toString(2)
@@ -39,4 +39,4 @@ function base10ToArray(value, expectedArrSize) {
   return resultArr.reverse();
 }
 
-export { arrayToBase10, base10ToArray, };
+export { boolArrayToBase10, base10ToBoolArray, };

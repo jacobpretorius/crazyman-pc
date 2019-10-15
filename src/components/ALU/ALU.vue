@@ -23,7 +23,7 @@
 
 <script>
 import { mapState, mapMutations, mapGetters } from 'vuex';
-import { busArrayAddition } from './ALUOperations.js';
+import { boolArrayAddition, boolArraySubtraction } from './ALUOperations.js';
 
 export default {
   name: 'ALU',
@@ -72,10 +72,17 @@ export default {
         this.registers[this.registerNames[0]].length &
         this.registers[this.registerNames[1]].length
       ) {
-        return busArrayAddition(
+        if (this.subtractionEnabled) {
+          return boolArraySubtraction(
           this.registers[this.registerNames[0]],
           this.registers[this.registerNames[1]],
         );
+        } else {
+          return boolArrayAddition(
+          this.registers[this.registerNames[0]],
+          this.registers[this.registerNames[1]],
+        );
+        }
       } else {
         console.log('This CPU needs some registers.');
         return;
