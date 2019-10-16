@@ -1,9 +1,10 @@
 function boolArrayToBase10(array) {
   // Safely get the full bus values
-  var str = '';
-  for (let i = 0; i < array.length; i++) {
-    if (array[i]) {
-      if (array[i] === true) {
+  let str = '';
+  let flipped = array.reverse();
+  for (let i = 0; i < flipped.length; i++) {
+    if (flipped[i]) {
+      if (flipped[i] === true) {
         str = str + '1';
       } else {
         str = str + '0';
@@ -18,7 +19,7 @@ function boolArrayToBase10(array) {
 }
 
 function base10ToBoolArray(value, expectedArrSize) {
-  // Convert result to base 2 and reverse for our bus format
+  // Convert result to base 2 and reverse because we want bit 0 to be 1(base2)
   var valueBase2 = value
     .toString(2)
     .split('')
@@ -35,8 +36,7 @@ function base10ToBoolArray(value, expectedArrSize) {
     }
   }
 
-  // NB: We always reverse the result because we want bit 0 to be 1(base2)
-  return resultArr.reverse();
+  return resultArr;
 }
 
 export { boolArrayToBase10, base10ToBoolArray, };

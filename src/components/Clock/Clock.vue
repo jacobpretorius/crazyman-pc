@@ -2,9 +2,11 @@
   <div class="Clock">
     <h1>Clock</h1>
 
-    <div class="led" :class="{ on : this.clockHigh }"></div>
+    <div class="led" :class="{ greenled : this.clockHigh }"></div>
+    <div class="led" :class="{ blueled : this.controlLines.halt }"><span title="halt">h</span></div>
+    <div class="break"></div> 
 
-    <button @click="handleRun" :class="{ on : clockRunning }">RUN</button>
+    <button @click="handleRun" :class="{ active : clockRunning }">RUN</button>
     <button @click="handleStop">STOP</button>
     <button @click="handlePulse">PULSE</button>
   </div>
@@ -22,7 +24,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['bus', 'clockHigh']),
+    ...mapState(['bus', 'clockHigh', 'controlLines']),
   },
   methods: {
     ...mapMutations({
@@ -63,26 +65,5 @@ export default {
   padding: 5px;
   margin: 5px;
   min-width: 112px;
-
-  .led {
-    width: 20px;
-    height: 20px;
-    background-color: $color-gunmetal;
-    opacity: .5;
-    padding: 0 2px;
-    margin: 2px 2px 5px 2px;
-    border-radius: 10px;
-  }
-
-  .on {
-    background-color: $color-eucalyptus;
-    opacity: 1;
-  }
-
-  button {
-    padding: 0 2px;
-    margin: 2px;
-    border: 1px solid $color-gunmetal;
-  }
 }
 </style>

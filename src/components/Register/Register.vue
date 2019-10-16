@@ -2,21 +2,22 @@
   <div class="Register">
     <h1>Register {{ registerName }}</h1>
 
-    <div class="led" :class="{ write : this.writeEnabledLED }">
+    <div class="led" :class="{ redlead : this.writeEnabledLED }">
       <span>w</span>
     </div>
-    <div class="led" :class="{ read : this.readEnabledLED }">
+    <div class="led" :class="{ bluelead : this.readEnabledLED }">
       <span>r</span>
     </div>
+    <div class="break"></div> 
 
-    <div class="Input-Area">
+    <div class="input-area">
       <input
         type="text"
-        v-for="(registerLine, index) in register"
+        v-for="(registerLine, index) in displayRegister"
         :key="`register-${registerName}-${index}`"
         :value="registerLine === true ? 1 : 0"
         @keypress="checkValueValidBinaryChar(index, $event)"
-        class="Bus-Line"
+        class="bus-line"
         :class="{ lineHigh : registerLine === true }"
       />
     </div>
@@ -50,6 +51,9 @@ export default {
     ...mapState(['bus', 'clockHigh', 'registers']),
     register: function() {
       return this.registers[this.registerName];
+    },
+    displayRegister() {
+      return [...this.register].reverse();
     },
   },
   methods: {
@@ -114,63 +118,9 @@ export default {
 
 <style scoped lang="scss">
 .Register {
-  h1 {
-    display: inline-block;
-  }
-
   border: 2px solid $color-eucalyptus;
   padding: 5px;
   margin: 5px;
   min-width: 206px;
-
-  .led {
-    width: 20px;
-    height: 20px;
-    background-color: $color-gunmetal;
-    padding: 0 2px;
-    margin: 2px 2px 5px 2px;
-    float: right;
-    border-radius: 10px;
-    opacity: 0.5;
-    text-align: center;
-    color: white;
-
-    :first-child {
-      vertical-align: top;
-      top: -2px;
-      position: relative;
-    }
-  }
-
-  .read {
-    background-color: $color-electric-blue;
-    opacity: 1;
-  }
-
-  .write {
-    background-color: $color-Red;
-    opacity: 1;
-  }
-
-  .Input-Area {
-    display: flex;
-
-    .Bus-Line {
-      width: 20px;
-      padding: 3px;
-      margin: 2px;
-      border: 2px solid $color-gunmetal;
-
-      &.lineHigh {
-        border: 2px solid $color-eucalyptus;
-      }
-    }
-  }
-
-  button {
-    padding: 0 2px;
-    margin: 2px;
-    border: 1px solid $color-gunmetal;
-  }
 }
 </style>

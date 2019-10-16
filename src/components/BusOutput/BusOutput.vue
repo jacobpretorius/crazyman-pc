@@ -2,13 +2,13 @@
   <div class="BusOutput">
     <h1>Bus Output</h1>
 
-    <div class="Input-Area">
+    <div class="input-area">
       <input
         type="text"
-        v-for="(busLine, index) in bus"
+        v-for="(busLine, index) in displayBus"
         :key="index"
         :value="busLine === true ? 1 : 0"
-        class="Bus-Line"
+        class="bus-line"
         :class="{ lineHigh : busLine === true }"
       />
     </div>
@@ -24,7 +24,10 @@ import { mapState, mapMutations } from "vuex";
 export default {
   name: "BusOutput",
   computed: {
-    ...mapState(["bus"])
+    ...mapState(["bus"]),
+    displayBus() {
+      return [...this.bus].reverse();
+    },
   },
   methods: {
     ...mapMutations({
@@ -47,26 +50,5 @@ export default {
   padding: 5px;
   margin: 5px;
   min-width: 205px;
-  
-  .Input-Area {
-    display: flex;
-
-    .Bus-Line {
-      width: 20px;
-      padding: 3px;
-      margin: 2px;
-      border: 2px solid $color-gunmetal;
-
-      &.lineHigh{
-        border: 2px solid $color-eucalyptus;
-      }
-    }
-  }
-
-  button {
-    padding: 0 2px;
-    margin: 0 2px;
-    border: 1px solid $color-gunmetal;
-  }
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div class="BinaryAdder">
     <h1>Binary Adder</h1>
+    <div class="break"></div> 
 
     <button @click="handleActive" :class="{ active : adderRunning }">ENABLE</button>
     <button @click="handleStop">STOP</button>
@@ -58,15 +59,5 @@ export default {
   padding: 5px;
   margin: 5px;
   min-width: 88px;
-
-  .active {
-    background-color: $color-eucalyptus;
-  }
-
-  button {
-    padding: 0 2px;
-    margin: 2px;
-    border: 1px solid $color-gunmetal;
-  }
 }
 </style>
