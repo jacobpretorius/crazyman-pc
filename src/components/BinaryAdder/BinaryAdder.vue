@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from 'vuex';
+import { mapState, mapMutations, } from 'vuex';
 import { boolArrayToBase10, base10ToBoolArray } from '../../utils/BusConversions.js';
 
 export default {
@@ -20,7 +20,6 @@ export default {
   },
   computed: {
     ...mapState(['bus', 'clockHigh']),
-    ...mapGetters(['getBus']),
   },
   methods: {
     ...mapMutations({
@@ -38,13 +37,13 @@ export default {
     clockHigh: function() {
       if (this.adderRunning) {
         if (this.clockHigh) {
-          var busAsBase10 = boolArrayToBase10(this.getBus);
+          var busAsBase10 = boolArrayToBase10(this.bus);
 
           // Add 1 to converted bus
           busAsBase10 = busAsBase10 + 1;
 
           this.fullSetBus(
-            base10ToBoolArray(busAsBase10, this.getBus.length),
+            base10ToBoolArray(busAsBase10, this.bus.length),
           );
         }
       }

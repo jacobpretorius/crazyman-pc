@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from 'vuex';
+import { mapState, mapMutations, } from 'vuex';
 import { boolArrayAddition, boolArraySubtraction } from './ALUOperations.js';
 
 export default {
@@ -41,11 +41,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['clockHigh']),
-    ...mapGetters(['getRegisters']),
-    registers: function() {
-      return this.getRegisters;
-    },
+    ...mapState(['clockHigh', 'registers']),
   },
   methods: {
     ...mapMutations({

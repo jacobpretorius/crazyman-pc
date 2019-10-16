@@ -47,12 +47,4 @@ export default new Vuex.Store({
       ]);
     },
   },
-  getters: {
-    getBus(state) {
-      return state.bus;
-    },
-    getRegisters(state) {
-      return state.registers;
-    },
-  },
 });

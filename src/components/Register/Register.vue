@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from 'vuex';
+import { mapState, mapMutations, } from 'vuex';
 
 export default {
   name: 'Register',
@@ -47,10 +47,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(['bus', 'clockHigh']),
-    ...mapGetters(['getRegisters', 'getBus']),
+    ...mapState(['bus', 'clockHigh', 'registers']),
     register: function() {
-      return this.getRegisters[this.registerName];
+      return this.registers[this.registerName];
     },
   },
   methods: {
@@ -63,7 +62,7 @@ export default {
       this.blinkReadEnabledLed();
       this.setRegister({
         registerName: this.registerName,
-        updatedRegister: [...this.getBus],
+        updatedRegister: [...this.bus],
       });
     },
     writeRegisterToBus() {
