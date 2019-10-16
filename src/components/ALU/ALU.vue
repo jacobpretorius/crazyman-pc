@@ -15,7 +15,7 @@
       <span>-</span>
     </div>
     <div class="break"></div> 
-    
+
     <button @click="readEnabled = !readEnabled" :class="{ active : readEnabled }">ENABLE</button>
     <button @click="writeResultToBus">WRITE</button>
     <button @click="subtractEnable" :class="{ active : subtractionEnabled }">MIN</button>
