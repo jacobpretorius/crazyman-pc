@@ -15,6 +15,7 @@
       <span>-</span>
     </div>
 
+    <div class="break"></div> 
     <button @click="readEnabled = !readEnabled" :class="{ active : readEnabled }">ENABLE</button>
     <button @click="writeResultToBus">WRITE</button>
     <button @click="subtractEnable" :class="{ active : subtractionEnabled }">MIN</button>
@@ -103,6 +104,11 @@ export default {
 .ALU {
   h1 {
     display: inline-block;
+  }
+
+  .break {
+    flex-basis: 100%;
+    height: 0;
   }
 
   border: 2px solid $color-eucalyptus;
