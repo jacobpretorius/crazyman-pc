@@ -77,6 +77,9 @@ export default {
         if (this.clockHigh) {
           var busAsBase10 = boolArrayToBase10(this.programCounterValue);
 
+          // I know, I know. This is dirty. I'll get round to changing it sometime.
+          // These operations being bitwise are less important to me than having the Ben Eater CPU running. MVP.
+
           // Add 1 to converted bus
           busAsBase10 = busAsBase10 + 1;
 
