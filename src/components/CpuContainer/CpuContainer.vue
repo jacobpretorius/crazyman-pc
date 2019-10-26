@@ -45,30 +45,33 @@ export default {
 <style lang="scss">
 .cpu-container {
   .flexer {
-    @apply flex flex-wrap mt-8 w-full;
+    display: flex;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    width: 100%;
 
     .bus-output {
-      @apply w-2/5;
+      width: 40%;
     }
 
     .program-counter {
-      @apply w-1/4;
+      width: 25%;
     }
 
     .clock {
-      @apply w-1/4;
+      width: 25%;
     }
 
     .register {
-      @apply w-1/3;
+      width: 33%;
     }
 
     .binary-adder {
-      @apply w-1/5;
+      width: 20%;
     }
 
     .ALU {
-      @apply w-1/5;
+      width: 20%;
     }
 
     h1 {
@@ -84,7 +87,7 @@ export default {
       display: flex;
 
       .bus-line {
-        width: 20px;
+        width: 10px;
         padding: 3px;
         margin: 2px;
         border: 2px solid $color-gunmetal;
@@ -107,10 +110,11 @@ export default {
       text-align: center;
       color: white;
       cursor: not-allowed;
+      box-sizing: border-box;
 
       :first-child {
         vertical-align: top;
-        top: -2px;
+        top: -3px;
         position: relative;
       }
     }
@@ -135,7 +139,7 @@ export default {
     }
 
     button {
-      padding: 0 2px;
+      padding: 2px 4px;
       margin: 2px;
       border: 1px solid $color-gunmetal;
     }

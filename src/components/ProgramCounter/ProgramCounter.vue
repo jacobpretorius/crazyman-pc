@@ -61,7 +61,7 @@ export default {
 
           this.programCounterValue = base10ToBoolArray(
             busAsBase10,
-            this.programCounterValue.length
+            this.programCounterValue.length,
           );
 
           if (this.controlLines.programCounterOut) {

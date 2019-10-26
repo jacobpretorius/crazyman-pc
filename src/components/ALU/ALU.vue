@@ -85,12 +85,12 @@ export default {
         if (this.subtractionEnabled) {
           return boolArraySubtraction(
             this.registers[this.registerNames[0]],
-            this.registers[this.registerNames[1]]
+            this.registers[this.registerNames[1]],
           );
         } else {
           return boolArrayAddition(
             this.registers[this.registerNames[0]],
-            this.registers[this.registerNames[1]]
+            this.registers[this.registerNames[1]],
           );
         }
       } else {
