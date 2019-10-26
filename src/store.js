@@ -17,7 +17,7 @@ export default new Vuex.Store({
       Vue.set(state, 'bus', payload.slice());
     },
     UPDATE_BUS: (state, payload) => {
-      var updatedBus = [...state.bus];
+      let updatedBus = [...state.bus];
       updatedBus[payload.index] = parseInt(payload.value);
       Vue.set(state, 'bus', updatedBus.slice());
     },

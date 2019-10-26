@@ -8,17 +8,17 @@
     <div class="led" :class="{ bluelead : this.readEnabledLED }">
       <span>r</span>
     </div>
-    <div class="break"></div> 
+    <div class="break"></div>
 
     <div class="input-area">
       <input
-        type="text"
         v-for="(registerLine, index) in displayRegister"
         :key="`register-${registerName}-${index}`"
+        type="text"
         :value="registerLine === true ? 1 : 0"
-        @keypress="checkValueValidBinaryChar(index, $event)"
         class="bus-line"
         :class="{ lineHigh : registerLine === true }"
+        @keypress="checkValueValidBinaryChar(index, $event)"
       />
     </div>
 
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'Register',
@@ -56,6 +56,17 @@ export default {
       return [...this.register].reverse();
     },
   },
+  watch: {
+    clockHigh: function() {
+      // Read from BUS
+      if (this.readEnabled) {
+        this.loadRegisterFromBus();
+      }
+    },
+  },
+  created() {
+    this.resetRegister(this.registerName);
+  },
   methods: {
     ...mapMutations({
       setRegister: 'SET_REGISTER',
@@ -79,7 +90,7 @@ export default {
     checkValueValidBinaryChar(index, event) {
       if (event.key === '1' || event.key === '0') {
         let updatedRegister = [...this.register];
-        updatedRegister[index] = event.key === '1' ? true : false;
+        updatedRegister[index] = event.key === '1';
 
         this.setRegister({
           registerName: this.registerName,
@@ -101,17 +112,6 @@ export default {
         this.writeEnabledLED = false;
       }, 350);
     },
-  },
-  watch: {
-    clockHigh: function() {
-      // Read from BUS
-      if (this.readEnabled) {
-        this.loadRegisterFromBus();
-      }
-    },
-  },
-  created() {
-    this.resetRegister(this.registerName);
   },
 };
 </script>

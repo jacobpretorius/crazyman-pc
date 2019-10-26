@@ -37,7 +37,7 @@ export default {
     ProgramCounter,
   },
   computed: mapState({
-    items: (state) => state,
+    items: state => state,
   }),
 };
 </script>

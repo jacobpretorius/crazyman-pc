@@ -3,7 +3,8 @@ module.exports = {
   semi: true,
   singleQuote: true,
   quoteProps: 'as-needed',
-  trailingComma: 'all',
+  trailingComma: 'es5',
   bracketSpacing: true,
-  arrowParens: 'always',
+  arrowParens: 'avoid',
+  parser: 'vue'
 };

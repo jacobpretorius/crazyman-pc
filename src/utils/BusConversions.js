@@ -30,7 +30,7 @@ function base10ToBoolArray(value, expectedArrSize) {
   // safely build the result bus array
   for (let j = 0; j < expectedArrSize; j++) {
     if (valueBase2[j]) {
-      resultArr[j] = valueBase2[j] === '1' ? true : false;
+      resultArr[j] = valueBase2[j] === '1';
     } else {
       resultArr[j] = false;
     }
@@ -39,4 +39,4 @@ function base10ToBoolArray(value, expectedArrSize) {
   return resultArr;
 }
 
-export { boolArrayToBase10, base10ToBoolArray, };
+export { boolArrayToBase10, base10ToBoolArray };

@@ -5,13 +5,13 @@
     <div class="led" :class="{ redled : controlLines.programCounterOut }">
       <span>w</span>
     </div>
-    <div class="break"></div> 
+    <div class="break"></div>
 
     <div class="input-area">
       <input
-        type="text"
         v-for="(counterLine, index) in displayProgramCounter"
         :key="index"
+        type="text"
         :value="counterLine === true ? 1 : 0"
         class="bus-line"
         :class="{ lineHigh : counterLine === true }"
@@ -20,8 +20,8 @@
     </div>
 
     <button
-      @click="handleActiveClick"
       :class="{ active : controlLines.programCounterEnabled }"
+      @click="handleActiveClick"
     >ENABLE</button>
     <button @click="writePCToBus">WRITE</button>
   </div>
@@ -47,30 +47,6 @@ export default {
       return [...this.programCounterValue].reverse();
     },
   },
-  methods: {
-    ...mapMutations({
-      fullSetBus: 'FULL_SET_BUS',
-      updateControlLine: 'UPDATE_CONTROL_LINES',
-    }),
-    handleActiveClick() {
-      this.updateControlLine({
-        line: 'programCounterEnabled',
-        value: !this.controlLines.programCounterEnabled,
-      });
-    },
-    writePCToBus() {
-      var _bus = [...this.bus]
-      var _flipped = [...this.programCounterValue]
-      for (let i = 0; i < _bus.length; i++) {
-        if (_flipped[i]) {
-          _bus[i] = _flipped[i];
-        }
-      }
-      this.fullSetBus(
-        _bus
-      );
-    },
-  },
   watch: {
     clockHigh: function() {
       if (this.controlLines.programCounterEnabled) {
@@ -85,7 +61,7 @@ export default {
 
           this.programCounterValue = base10ToBoolArray(
             busAsBase10,
-            this.programCounterValue.length,
+            this.programCounterValue.length
           );
 
           if (this.controlLines.programCounterOut) {
@@ -93,6 +69,27 @@ export default {
           }
         }
       }
+    },
+  },
+  methods: {
+    ...mapMutations({
+      fullSetBus: 'FULL_SET_BUS',
+      updateControlLine: 'UPDATE_CONTROL_LINES',
+    }),
+    handleActiveClick() {
+      this.updateControlLine({
+        line: 'programCounterEnabled',
+        value: !this.controlLines.programCounterEnabled,
+      });
+    },
+    writePCToBus() {
+      let tempBus = [...this.bus];
+      for (let i = 0; i < tempBus.length; i++) {
+        if (this.programCounterValue[i]) {
+          tempBus[i] = this.programCounterValue[i];
+        }
+      }
+      this.fullSetBus(tempBus);
     },
   },
 };

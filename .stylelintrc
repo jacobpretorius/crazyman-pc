@@ -9,6 +9,7 @@
       ]
     }],
     "block-no-empty": null,
-    "unit-whitelist": ["em", "rem", "s", "px"]
+    "declaration-empty-line-before": null,
+    "unit-whitelist": ["em", "rem", "s", "px", "%"]
   }
 }

@@ -4,9 +4,9 @@
 
     <div class="input-area">
       <input
-        type="text"
         v-for="(busLine, index) in displayBus"
         :key="index"
+        type="text"
         :value="busLine === true ? 1 : 0"
         class="bus-line"
         :class="{ lineHigh : busLine === true }"
@@ -19,28 +19,28 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations } from 'vuex';
 
 export default {
-  name: "BusOutput",
+  name: 'BusOutput',
   computed: {
-    ...mapState(["bus"]),
+    ...mapState(['bus']),
     displayBus() {
       return [...this.bus].reverse();
     },
   },
   methods: {
     ...mapMutations({
-      fullSetBus: "FULL_SET_BUS",
-      resetBus: "RESET_BUS",
+      fullSetBus: 'FULL_SET_BUS',
+      resetBus: 'RESET_BUS',
     }),
     handleResetBus() {
       this.resetBus();
     },
     handleTestState() {
       this.fullSetBus([false, true, false, true, false, true, false, true]);
-    }
-  }
+    },
+  },
 };
 </script>
 

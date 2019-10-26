@@ -30,4 +30,4 @@ function boolArraySubtraction(arr1, arr2) {
   return base10ToBoolArray(additionResult, shortestArrLength);
 }
 
-export { boolArrayAddition, boolArraySubtraction, };
+export { boolArrayAddition, boolArraySubtraction };

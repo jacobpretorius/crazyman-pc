@@ -14,16 +14,16 @@
     <div class="led" :class="{ blueled : subtractionEnabled }">
       <span>-</span>
     </div>
-    <div class="break"></div> 
+    <div class="break"></div>
 
-    <button @click="readEnabled = !readEnabled" :class="{ active : readEnabled }">ENABLE</button>
+    <button :class="{ active : readEnabled }" @click="readEnabled = !readEnabled">ENABLE</button>
     <button @click="writeResultToBus">WRITE</button>
-    <button @click="subtractEnable" :class="{ active : subtractionEnabled }">MIN</button>
+    <button :class="{ active : subtractionEnabled }" @click="subtractEnable">MIN</button>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations, } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { boolArrayAddition, boolArraySubtraction } from './ALUOperations.js';
 
 export default {
@@ -31,7 +31,9 @@ export default {
   props: {
     registerNames: {
       type: Array,
-      default: [],
+      default() {
+        return []
+      },
     },
   },
   data: function() {
@@ -43,6 +45,17 @@ export default {
   },
   computed: {
     ...mapState(['clockHigh', 'registers']),
+  },
+  watch: {
+    clockHigh: function() {
+      // Read from BUS
+      if (this.readEnabled) {
+        let result = this.calculateAddition();
+        if (result) {
+          this.fullSetBus(result);
+        }
+      }
+    },
   },
   methods: {
     ...mapMutations({
@@ -71,29 +84,18 @@ export default {
       ) {
         if (this.subtractionEnabled) {
           return boolArraySubtraction(
-          this.registers[this.registerNames[0]],
-          this.registers[this.registerNames[1]],
-        );
+            this.registers[this.registerNames[0]],
+            this.registers[this.registerNames[1]]
+          );
         } else {
           return boolArrayAddition(
-          this.registers[this.registerNames[0]],
-          this.registers[this.registerNames[1]],
-        );
+            this.registers[this.registerNames[0]],
+            this.registers[this.registerNames[1]]
+          );
         }
       } else {
         console.log('This CPU needs some registers.');
         return;
-      }
-    },
-  },
-  watch: {
-    clockHigh: function() {
-      // Read from BUS
-      if (this.readEnabled) {
-        let result = this.calculateAddition();
-        if (result) {
-          this.fullSetBus(result);
-        }
       }
     },
   },

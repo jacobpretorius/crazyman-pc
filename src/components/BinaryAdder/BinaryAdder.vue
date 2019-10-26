@@ -1,15 +1,18 @@
 <template>
   <div class="BinaryAdder">
     <h1>Binary Adder</h1>
-    <div class="break"></div> 
+    <div class="break"></div>
 
-    <button @click="handleActiveClick" :class="{ active : adderRunning }">ENABLE</button>
+    <button :class="{ active : adderRunning }" @click="handleActiveClick">ENABLE</button>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations, } from 'vuex';
-import { boolArrayToBase10, base10ToBoolArray } from '../../utils/BusConversions.js';
+import { mapState, mapMutations } from 'vuex';
+import {
+  boolArrayToBase10,
+  base10ToBoolArray,
+} from '../../utils/BusConversions.js';
 
 export default {
   name: 'BinaryAdder',
@@ -20,15 +23,6 @@ export default {
   },
   computed: {
     ...mapState(['bus', 'clockHigh']),
-  },
-  methods: {
-    ...mapMutations({
-      fullSetBus: 'FULL_SET_BUS',
-      resetBus: 'RESET_BUS',
-    }),
-    handleActiveClick() {
-      this.adderRunning = !this.adderRunning;
-    },
   },
   watch: {
     clockHigh: function() {
@@ -42,11 +36,18 @@ export default {
           // Add 1 to converted bus
           busAsBase10 = busAsBase10 + 1;
 
-          this.fullSetBus(
-            base10ToBoolArray(busAsBase10, this.bus.length),
-          );
+          this.fullSetBus(base10ToBoolArray(busAsBase10, this.bus.length));
         }
       }
+    },
+  },
+  methods: {
+    ...mapMutations({
+      fullSetBus: 'FULL_SET_BUS',
+      resetBus: 'RESET_BUS',
+    }),
+    handleActiveClick() {
+      this.adderRunning = !this.adderRunning;
     },
   },
 };

@@ -3,10 +3,12 @@
     <h1>Clock</h1>
 
     <div class="led" :class="{ greenled : this.clockHigh }"></div>
-    <div class="led" :class="{ blueled : this.controlLines.halt }"><span title="halt">h</span></div>
-    <div class="break"></div> 
+    <div class="led" :class="{ blueled : this.controlLines.halt }">
+      <span title="halt">h</span>
+    </div>
+    <div class="break"></div>
 
-    <button @click="handleRunClick" :class="{ active : clockRunning }">RUN</button>
+    <button :class="{ active : clockRunning }" @click="handleRunClick">RUN</button>
     <button @click="handlePulse">PULSE</button>
   </div>
 </template>
@@ -33,7 +35,7 @@ export default {
       this.sendHighLowClockPulse();
     },
     handleRunClick() {
-      this.clockRunning = !this.clockRunning ;
+      this.clockRunning = !this.clockRunning;
       if (this.clockRunning) {
         this.startClockPulse();
       } else {
@@ -49,7 +51,7 @@ export default {
       this.clockIntervals.push(timer);
     },
     clearRunningTimers() {
-      this.clockIntervals.forEach((timer) => {
+      this.clockIntervals.forEach(timer => {
         clearInterval(timer);
       });
     },
