@@ -11,7 +11,9 @@
       <Register class="register" register-name="B" />
 
       <BinaryAdder class="binary-adder" />
+      <RAM />
       <ALU class="alu" :registerNames="['A','B']" />
+
     </div>
   </div>
 </template>
@@ -25,6 +27,7 @@ import Clock from '../Clock/Clock.vue';
 import Register from '../Register/Register.vue';
 import BinaryAdder from '../BinaryAdder/BinaryAdder.vue';
 import ProgramCounter from '../ProgramCounter/ProgramCounter.vue';
+import RAM from '../RAM/RAM.vue';
 
 export default {
   name: 'CpuContainer',
@@ -35,6 +38,7 @@ export default {
     Register,
     BinaryAdder,
     ProgramCounter,
+    RAM,
   },
   computed: mapState({
     items: state => state,
@@ -74,13 +78,17 @@ export default {
       width: 20%;
     }
 
+    .RAM {
+      width: 30%;
+    }
+
     h1 {
       display: inline-block;
     }
 
     .break {
       flex-basis: 100%;
-      height: 0;
+      height: 3px;
     }
 
     .input-area {
@@ -116,6 +124,10 @@ export default {
         vertical-align: top;
         top: -3px;
         position: relative;
+      }
+
+      &--w {
+        width: 30px;
       }
     }
 

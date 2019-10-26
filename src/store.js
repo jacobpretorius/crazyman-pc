@@ -10,6 +10,7 @@ export default new Vuex.Store({
     registers: {},
     clockHigh: false,
     controlLines: controlLineModel,
+    memory: {},
   },
   mutations: {
     // BUS
@@ -34,7 +35,7 @@ export default new Vuex.Store({
 
     // REGISTERS
     SET_REGISTER: (state, payload) => {
-      Vue.set(state.registers, payload.registerName, payload.updatedRegister);
+      Vue.set(state.registers, payload.registerName, payload.value);
     },
     RESET_REGISTER: (state, payload) => {
       Vue.set(state.registers, payload, [
@@ -47,6 +48,11 @@ export default new Vuex.Store({
         false,
         false,
       ]);
+    },
+
+    // MEMORY
+    SET_MEMORY_LOCATION: (state, payload) => {
+      Vue.set(state.memory, payload.memoryAddress, payload.value);
     },
 
     // CONTROL LINES

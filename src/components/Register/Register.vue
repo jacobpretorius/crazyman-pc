@@ -41,8 +41,7 @@ export default {
   },
   data: function() {
     return {
-      readEnabled: false,
-      writeEnabled: false,
+      readFromBus: false, // temp
       readEnabledLED: false,
       writeEnabledLED: false,
     };
@@ -59,7 +58,7 @@ export default {
   watch: {
     clockHigh: function() {
       // Read from BUS
-      if (this.readEnabled) {
+      if (this.readFromBus) {
         this.loadRegisterFromBus();
       }
     },
@@ -77,7 +76,7 @@ export default {
       this.blinkReadEnabledLed();
       this.setRegister({
         registerName: this.registerName,
-        updatedRegister: [...this.bus],
+        value: [...this.bus],
       });
     },
     writeRegisterToBus() {
@@ -94,7 +93,7 @@ export default {
 
         this.setRegister({
           registerName: this.registerName,
-          updatedRegister,
+          value: updatedRegister,
         });
         return;
       }

@@ -9,10 +9,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import {
-  boolArrayToBase10,
-  base10ToBoolArray,
-} from '../../utils/BusConversions.js';
+import { boolArrayToBase10, base10ToBoolArray } from '../../utils/BusConversions.js';
 
 export default {
   name: 'BinaryAdder',

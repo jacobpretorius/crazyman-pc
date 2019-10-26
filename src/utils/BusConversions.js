@@ -18,7 +18,7 @@ function boolArrayToBase10(array) {
   return parseInt(str, 2);
 }
 
-function base10ToBoolArray(value, expectedArrSize) {
+function base10ToBoolArray(value, expectedArrSize = 8) {
   // Convert result to base 2 and reverse because we want bit 0 to be 1(base2)
   let valueBase2 = value
     .toString(2)

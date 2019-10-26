@@ -2,10 +2,10 @@
   <div class="ALU">
     <h1>ALU</h1>
 
-    <div class="led" :class="{ redled : writeEnabledLED }">
+    <div class="led" :class="{ redled : writeAluResultToBusLED }">
       <span>w</span>
     </div>
-    <div class="led" :class="{ redled : readEnabled }">
+    <div class="led" :class="{ redled : readFromBus }">
       <span>r</span>
     </div>
     <div class="led" :class="{ blueled : !subtractionEnabled }">
@@ -16,7 +16,7 @@
     </div>
     <div class="break"></div>
 
-    <button :class="{ active : readEnabled }" @click="readEnabled = !readEnabled">ENABLE</button>
+    <button :class="{ active : readFromBus }" @click="readFromBus = !readFromBus">ENABLE</button>
     <button @click="writeResultToBus">WRITE</button>
     <button :class="{ active : subtractionEnabled }" @click="subtractEnable">MIN</button>
   </div>
@@ -24,7 +24,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { boolArrayAddition, boolArraySubtraction } from './ALUOperations.js';
+import { boolArrayAddition, boolArraySubtraction } from '@/utils/BoolArrayOperations.js';
 
 export default {
   name: 'ALU',
@@ -38,18 +38,20 @@ export default {
   },
   data: function() {
     return {
-      readEnabled: false,
-      writeEnabledLED: false,
+      readFromBus: false,
+      writeAluResultToBusLED: false,
       subtractionEnabled: false,
     };
   },
   computed: {
     ...mapState(['clockHigh', 'registers']),
+    registersValid() {
+      return this.registers[this.registerNames[0]].length & this.registers[this.registerNames[1]].length;
+    },
   },
   watch: {
     clockHigh: function() {
-      // Read from BUS
-      if (this.readEnabled) {
+      if (this.readFromBus) {
         let result = this.calculateAddition();
         if (result) {
           this.fullSetBus(result);
@@ -72,16 +74,13 @@ export default {
       this.subtractionEnabled = !this.subtractionEnabled;
     },
     blinkWriteEnabledLed() {
-      this.writeEnabledLED = true;
+      this.writeAluResultToBusLED = true;
       window.setTimeout(() => {
-        this.writeEnabledLED = false;
+        this.writeAluResultToBusLED = false;
       }, 350);
     },
     calculateAddition() {
-      if (
-        this.registers[this.registerNames[0]].length &
-        this.registers[this.registerNames[1]].length
-      ) {
+      if (this.registersValid) {
         if (this.subtractionEnabled) {
           return boolArraySubtraction(
             this.registers[this.registerNames[0]],

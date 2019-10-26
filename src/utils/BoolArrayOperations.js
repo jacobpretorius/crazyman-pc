@@ -1,4 +1,4 @@
-import { base10ToBoolArray, boolArrayToBase10 } from '../../utils/BusConversions.js';
+import { base10ToBoolArray, boolArrayToBase10 } from './BusConversions.js';
 
 // I know, I know. These aren't actually bitwise additions/subtractions. They are done in
 // plain old base 10. I'll get round to changing them sometime.
