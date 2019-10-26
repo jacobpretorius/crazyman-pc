@@ -6,8 +6,7 @@
     <div class="led" :class="{ blueled : this.controlLines.halt }"><span title="halt">h</span></div>
     <div class="break"></div> 
 
-    <button @click="handleRun" :class="{ active : clockRunning }">RUN</button>
-    <button @click="handleStop">STOP</button>
+    <button @click="handleRunClick" :class="{ active : clockRunning }">RUN</button>
     <button @click="handlePulse">PULSE</button>
   </div>
 </template>
@@ -33,8 +32,15 @@ export default {
     handlePulse() {
       this.sendHighLowClockPulse();
     },
-    handleRun() {
-      this.clockRunning = true;
+    handleRunClick() {
+      this.clockRunning = !this.clockRunning ;
+      if (this.clockRunning) {
+        this.startClockPulse();
+      } else {
+        this.clearRunningTimers();
+      }
+    },
+    startClockPulse() {
       this.sendHighLowClockPulse();
       var timer = window.setInterval(() => {
         this.sendHighLowClockPulse();
@@ -42,8 +48,7 @@ export default {
 
       this.clockIntervals.push(timer);
     },
-    handleStop() {
-      this.clockRunning = false;
+    clearRunningTimers() {
       this.clockIntervals.forEach((timer) => {
         clearInterval(timer);
       });

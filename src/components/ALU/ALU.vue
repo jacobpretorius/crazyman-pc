@@ -50,7 +50,7 @@ export default {
     }),
     writeResultToBus() {
       this.blinkWriteEnabledLed();
-      var result = this.calculateAddition();
+      let result = this.calculateAddition();
       if (result) {
         this.fullSetBus(result);
       }
@@ -90,7 +90,7 @@ export default {
     clockHigh: function() {
       // Read from BUS
       if (this.readEnabled) {
-        var result = this.calculateAddition();
+        let result = this.calculateAddition();
         if (result) {
           this.fullSetBus(result);
         }

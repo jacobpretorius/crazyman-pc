@@ -3,8 +3,7 @@
     <h1>Binary Adder</h1>
     <div class="break"></div> 
 
-    <button @click="handleActive" :class="{ active : adderRunning }">ENABLE</button>
-    <button @click="handleStop">STOP</button>
+    <button @click="handleActiveClick" :class="{ active : adderRunning }">ENABLE</button>
   </div>
 </template>
 
@@ -27,18 +26,15 @@ export default {
       fullSetBus: 'FULL_SET_BUS',
       resetBus: 'RESET_BUS',
     }),
-    handleStop() {
-      this.adderRunning = false;
-    },
-    handleActive() {
-      this.adderRunning = true;
+    handleActiveClick() {
+      this.adderRunning = !this.adderRunning;
     },
   },
   watch: {
     clockHigh: function() {
       if (this.adderRunning) {
         if (this.clockHigh) {
-          var busAsBase10 = boolArrayToBase10(this.bus);
+          let busAsBase10 = boolArrayToBase10(this.bus);
 
           // I know, I know. This is dirty. I'll get round to changing it sometime.
           // These operations being bitwise are less important to me than having the Ben Eater CPU running. MVP.

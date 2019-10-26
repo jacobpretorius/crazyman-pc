@@ -78,7 +78,7 @@ export default {
     },
     checkValueValidBinaryChar(index, event) {
       if (event.key === '1' || event.key === '0') {
-        var updatedRegister = [...this.register];
+        let updatedRegister = [...this.register];
         updatedRegister[index] = event.key === '1' ? true : false;
 
         this.setRegister({

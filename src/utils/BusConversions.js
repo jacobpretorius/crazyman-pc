@@ -20,12 +20,12 @@ function boolArrayToBase10(array) {
 
 function base10ToBoolArray(value, expectedArrSize) {
   // Convert result to base 2 and reverse because we want bit 0 to be 1(base2)
-  var valueBase2 = value
+  let valueBase2 = value
     .toString(2)
     .split('')
     .reverse();
 
-  var resultArr = [];
+  let resultArr = [];
 
   // safely build the result bus array
   for (let j = 0; j < expectedArrSize; j++) {
