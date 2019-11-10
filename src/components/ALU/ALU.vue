@@ -2,16 +2,19 @@
   <div class="ALU">
     <h1>ALU</h1>
 
-    <div class="led" :class="{ redled : writeAluResultToBusLED }">
+    <div class="led" 
+      :class="{ redled : writeAluResultToBusLED }"
+      title="Write results to BUS">
       <span>w</span>
     </div>
-    <div class="led" :class="{ redled : controlLines.aluEnabled }">
-      <span>r</span>
-    </div>
-    <div class="led" :class="{ blueled : !controlLines.aluSubtractionEnabled}">
+    <div class="led" 
+      :class="{ blueled : !controlLines.aluSubtractionEnabled}"
+      title="Addition mode">
       <span>+</span>
     </div>
-    <div class="led" :class="{ blueled : controlLines.aluSubtractionEnabled }">
+    <div class="led" 
+      :class="{ blueled : controlLines.aluSubtractionEnabled }"
+      title="Subtraction mode">
       <span>-</span>
     </div>
     <div class="break"></div>
@@ -79,13 +82,13 @@ export default {
       if (this.registersValid) {
         if (this.controlLines.aluSubtractionEnabled) {
           return boolArraySubtraction(
-            [...this.registers[this.registerNames[0]]],
-            [...this.registers[this.registerNames[1]]],
+            this.registers[this.registerNames[0]],
+            this.registers[this.registerNames[1]],
           );
         } else {
           return boolArrayAddition(
-            [...this.registers[this.registerNames[0]]],
-            [...this.registers[this.registerNames[1]]],
+            this.registers[this.registerNames[0]],
+            this.registers[this.registerNames[1]],
           );
         }
       } else {

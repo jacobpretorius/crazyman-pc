@@ -1,16 +1,24 @@
 <template>
   <div class="RAM">
     <h1>RAM</h1>
-    <div class="led" :class="{ redled : controlLines.writeMemoryContentsToBus }">
+    <div class="led" 
+      :class="{ redled : controlLines.writeMemoryContentsToBus }"
+      title="Write memory contents to BUS">
       <span>w</span>
     </div>
-    <div class="led" :class="{ redled : controlLines.readMemoryContentsFromBus }">
+    <div class="led" 
+      :class="{ redled : controlLines.readMemoryContentsFromBus }"
+      title="Read memory contents from BUS">
       <span>r</span>
     </div>
-    <div class="led led--w" :class="{ blueled : controlLines.ramMemoryAddressRegisterReadFromBus }">
+    <div class="led led--w" 
+      :class="{ blueled : controlLines.ramMemoryAddressRegisterReadFromBus }"
+      title="Read MAR location from BUS">
       <span>mr</span>
     </div>
-    <div class="led led--w" :class="{ blueled : controlLines.ramMemoryAddressRegisterIncrement }">
+    <div class="led led--w" 
+      :class="{ blueled : controlLines.ramMemoryAddressRegisterIncrement }"
+      title="MAR increment on clock pulse">
       <span>m+</span>
     </div>
     <div class="break"></div>
@@ -27,6 +35,10 @@
       />
     </div>
 
+    <button @click="incrementMemoryAddressRegister">+</button>
+    <button @click="decrementMemoryAddressRegister">-</button>
+    <button @click="incrementMemoryAddressRegister">PULSE</button>
+
     <h2>Address Contents</h2>
     <div class="input-area">
       <input
@@ -38,6 +50,9 @@
         :class="{ lineHigh : busLine === true }"
       />
     </div>
+
+    <button @click="readMemoryContentsFromBus">READ</button>
+    <button @click="writeMemoryContentsToBus">WRITE</button>
 
   </div>
 </template>
@@ -56,10 +71,12 @@ export default {
   computed: {
     ...mapState(['bus', 'memory' ,'clockHigh', 'controlLines']),
     displayMemoryAddressRegister() {
+      // Remember, reverse for output as we work with 0 (base10) as our first bit
       return [...this.memoryAddressRegister].reverse();
     },
     displayMemoryAddressContents() {
       let normalAddress = boolArrayToBase10(this.memoryAddressRegister);
+      // Remember, reverse for output as we work with 0 (base10) as our first bit
       return [...this.memory[normalAddress]].reverse();
     },
   },
@@ -68,20 +85,23 @@ export default {
       // We may move some of this to clock low...
       if (this.clockHigh) {
         if (this.controlLines.ramMemoryAddressRegisterReadFromBus) {
-          this.memoryAddressRegister = this.bus.slice(0, this.memoryAddressRegister.length);
-          this.setControlLine({
-            line: 'ramMemoryAddressRegisterReadFromBus',
-            value: false,
-          });
-        } else {
-          // In the else so we don't do both on one clock pulse
-          if (this.controlLines.ramMemoryAddressRegisterIncrement) {
-            this.incrementMemoryAddressRegister();
-            this.setControlLine({
-              line: 'ramMemoryAddressRegisterIncrement',
-              value: false,
-            });
-          }
+          this.memoryAddressRegisterReadFromBus();
+          return;
+        }
+
+        if (this.controlLines.ramMemoryAddressRegisterIncrement) {
+          this.incrementMemoryAddressRegister();
+          return;
+        }
+
+        if (this.controlLines.ramReadMemoryContentsFromBus) {
+          this.readMemoryContentsFromBus();
+          return;
+        }
+
+        if (this.controlLines.ramWriteMemoryContentsToBus) {
+          this.writeMemoryContentsToBus();
+          return;
         }
       }
     },
@@ -93,11 +113,8 @@ export default {
     ...mapMutations({
       setMemoryLocation: 'SET_MEMORY_LOCATION',
       setControlLine: 'UPDATE_CONTROL_LINES',
+      fullSetBus: 'FULL_SET_BUS',
     }),
-    incrementMemoryAddressRegister() {
-      let incremented = boolArrayToBase10(this.memoryAddressRegister) + 1;
-      this.memoryAddressRegister = base10ToBoolArray(incremented, this.memoryAddressRegister.length);
-    },
     initializeMemory() {
       let usableMemoryAddresses = this.bus.length * 2;
       let nullState = [false, false, false, false, false, false, false, false];
@@ -106,6 +123,31 @@ export default {
         this.setMemoryLocation({ memoryAddress: i, value: nullState});
       }
     },
+    memoryAddressRegisterReadFromBus() {
+      this.memoryAddressRegister = this.bus.slice(0, this.memoryAddressRegister.length);
+    },
+    incrementMemoryAddressRegister() {
+      let incremented = boolArrayToBase10(this.memoryAddressRegister) + 1;
+      this.memoryAddressRegister = base10ToBoolArray(incremented, this.memoryAddressRegister.length);
+    },
+    decrementMemoryAddressRegister() {
+      let dec = boolArrayToBase10(this.memoryAddressRegister) - 1;
+      this.memoryAddressRegister = base10ToBoolArray(dec, this.memoryAddressRegister.length);
+    },
+    readMemoryContentsFromBus() {
+      let currentMemoryLocation = boolArrayToBase10(this.memoryAddressRegister);
+      this.setMemoryLocation({
+        memoryAddress: currentMemoryLocation,
+        value: [...this.bus],
+      });
+       return;
+    },
+    writeMemoryContentsToBus() {
+      let currentMemoryLocation = boolArrayToBase10(this.memoryAddressRegister);
+      this.fullSetBus([...this.memory[currentMemoryLocation]]);
+       return;
+    },
+
   },
 }
 </script>

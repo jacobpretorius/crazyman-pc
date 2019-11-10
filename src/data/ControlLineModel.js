@@ -9,7 +9,7 @@ const controlLineModel = {
 
   // RAM
   ramMemoryAddressRegisterReadFromBus: false, // Read MAR from bus
-  ramMemoryAddressRegisterIncrement: true, // Increment on clockhigh
+  ramMemoryAddressRegisterIncrement: false, // Increment on clockhigh
   ramWriteMemoryContentsToBus: false, // TODO
   ramReadMemoryContentsFromBus: false, // TODO
 

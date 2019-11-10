@@ -2,9 +2,14 @@
   <div class="Clock">
     <h1>Clock</h1>
 
-    <div class="led" :class="{ greenled : this.clockHigh }"></div>
-    <div class="led" :class="{ blueled : this.controlLines.halt }">
-      <span title="halt">h</span>
+    <div class="led" 
+      :class="{ greenled : this.clockHigh }"
+      title="Clock Pulse">
+    </div>
+    <div class="led" 
+      :class="{ blueled : this.controlLines.halt }"
+      title="Clock HALTED">
+      <span>h</span>
     </div>
     <div class="break"></div>
 

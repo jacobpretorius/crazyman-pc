@@ -13,8 +13,8 @@
       />
     </div>
 
-    <button @click="handleResetBus">RESET STATE</button>
-    <button @click="handleTestState">TEST STATE</button>
+    <button @click="handleResetBus">RESET</button>
+    <button @click="handleTestState">TEST</button>
   </div>
 </template>
 

@@ -44,6 +44,7 @@ export default new Vuex.Store({
     },
 
     // RAM
+    // memoryAddress: As base10 location
     SET_MEMORY_LOCATION: (state, payload) => {
       Vue.set(state.memory, payload.memoryAddress, payload.value);
     },
