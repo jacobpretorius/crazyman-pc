@@ -70,14 +70,17 @@ export default {
   },
   computed: {
     ...mapState(['bus', 'memory' ,'clockHigh', 'controlLines']),
+    usableMemoryAddresses() {
+      return boolArrayToBase10([...this.memoryAddressRegister].fill(true)) + 1;
+    },
     displayMemoryAddressRegister() {
       // Remember, reverse for output as we work with 0 (base10) as our first bit
       return [...this.memoryAddressRegister].reverse();
     },
     displayMemoryAddressContents() {
-      let normalAddress = boolArrayToBase10(this.memoryAddressRegister);
+      let activeAddress = boolArrayToBase10(this.memoryAddressRegister);
       // Remember, reverse for output as we work with 0 (base10) as our first bit
-      return [...this.memory[normalAddress]].reverse();
+      return [...this.memory[activeAddress]].reverse();
     },
   },
   watch: {
@@ -116,10 +119,9 @@ export default {
       fullSetBus: 'FULL_SET_BUS',
     }),
     initializeMemory() {
-      let usableMemoryAddresses = this.bus.length * 2;
       let nullState = [false, false, false, false, false, false, false, false];
 
-      for (let i = 0; i < usableMemoryAddresses; i++) {
+      for (let i = 0; i < this.usableMemoryAddresses; i++) {
         this.setMemoryLocation({ memoryAddress: i, value: nullState});
       }
     },
@@ -132,6 +134,10 @@ export default {
     },
     decrementMemoryAddressRegister() {
       let dec = boolArrayToBase10(this.memoryAddressRegister) - 1;
+      if (dec < 0) {
+        // Loop around for display/debugging ease of use
+        dec = this.usableMemoryAddresses - 1;
+      }
       this.memoryAddressRegister = base10ToBoolArray(dec, this.memoryAddressRegister.length);
     },
     readMemoryContentsFromBus() {
