@@ -22,5 +22,3 @@ npm run serve
 ```
 npm run build
 ```
-
-PS: The stylelint/prettier linting is well broken. Please PR and help me out they really don't like scss and Tailwind being combined even though I do for learning reasons.

@@ -7,10 +7,10 @@
     <div class="led" :class="{ redled : controlLines.readMemoryContentsFromBus }">
       <span>r</span>
     </div>
-    <div class="led led--w" :class="{ blueled : controlLines.memoryAddressRegisterReadFromBus }">
+    <div class="led led--w" :class="{ blueled : controlLines.ramMemoryAddressRegisterReadFromBus }">
       <span>mr</span>
     </div>
-    <div class="led led--w" :class="{ blueled : controlLines.memoryAddressRegisterIncrement }">
+    <div class="led led--w" :class="{ blueled : controlLines.ramMemoryAddressRegisterIncrement }">
       <span>m+</span>
     </div>
     <div class="break"></div>
@@ -67,14 +67,20 @@ export default {
     clockHigh: function() {
       // We may move some of this to clock low...
       if (this.clockHigh) {
-        if (this.controlLines.memoryAddressRegisterReadFromBus) {
+        if (this.controlLines.ramMemoryAddressRegisterReadFromBus) {
           this.memoryAddressRegister = this.bus.slice(0, this.memoryAddressRegister.length);
-          this.setControlLine('memoryAddressRegisterReadFromBus', false);
+          this.setControlLine({
+            line: 'ramMemoryAddressRegisterReadFromBus',
+            value: false,
+          });
         } else {
           // In the else so we don't do both on one clock pulse
-          if (this.controlLines.memoryAddressRegisterIncrement) {
+          if (this.controlLines.ramMemoryAddressRegisterIncrement) {
             this.incrementMemoryAddressRegister();
-            this.setControlLine('memoryAddressRegisterIncrement', false);
+            this.setControlLine({
+              line: 'ramMemoryAddressRegisterIncrement',
+              value: false,
+            });
           }
         }
       }

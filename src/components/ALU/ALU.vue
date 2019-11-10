@@ -5,20 +5,20 @@
     <div class="led" :class="{ redled : writeAluResultToBusLED }">
       <span>w</span>
     </div>
-    <div class="led" :class="{ redled : readFromBus }">
+    <div class="led" :class="{ redled : controlLines.aluEnabled }">
       <span>r</span>
     </div>
-    <div class="led" :class="{ blueled : !subtractionEnabled }">
+    <div class="led" :class="{ blueled : !controlLines.aluSubtractionEnabled}">
       <span>+</span>
     </div>
-    <div class="led" :class="{ blueled : subtractionEnabled }">
+    <div class="led" :class="{ blueled : controlLines.aluSubtractionEnabled }">
       <span>-</span>
     </div>
     <div class="break"></div>
 
-    <button :class="{ active : readFromBus }" @click="readFromBus = !readFromBus">ENABLE</button>
-    <button @click="writeResultToBus">WRITE</button>
-    <button :class="{ active : subtractionEnabled }" @click="subtractEnable">MIN</button>
+    <button :class="{ active : controlLines.aluEnabled }" @click="handleEnable">ENABLE</button>
+    <button :class="{ active : controlLines.aluWriteResultToBus }" @click="handWriteEnable">WRITE</button>
+    <button :class="{ active : controlLines.aluSubtractionEnabled }" @click="handleSubtractEnable">MIN</button>
   </div>
 </template>
 
@@ -38,22 +38,20 @@ export default {
   },
   data: function() {
     return {
-      readFromBus: false,
       writeAluResultToBusLED: false,
-      subtractionEnabled: false,
     };
   },
   computed: {
-    ...mapState(['clockHigh', 'registers']),
+    ...mapState(['clockHigh', 'registers', 'controlLines']),
     registersValid() {
       return this.registers[this.registerNames[0]].length & this.registers[this.registerNames[1]].length;
     },
   },
   watch: {
     clockHigh: function() {
-      if (this.readFromBus) {
-        let result = this.calculateAddition();
-        if (result) {
+      if (this.controlLines.aluEnabled) {
+        let result = this.calculateOperation();
+        if (result && this.controlLines.aluWriteResultToBus) {
           this.fullSetBus(result);
         }
       }
@@ -62,16 +60,14 @@ export default {
   methods: {
     ...mapMutations({
       fullSetBus: 'FULL_SET_BUS',
+      setControlLine: 'UPDATE_CONTROL_LINES',
     }),
     writeResultToBus() {
       this.blinkWriteEnabledLed();
-      let result = this.calculateAddition();
+      let result = this.calculateOperation();
       if (result) {
         this.fullSetBus(result);
       }
-    },
-    subtractEnable() {
-      this.subtractionEnabled = !this.subtractionEnabled;
     },
     blinkWriteEnabledLed() {
       this.writeAluResultToBusLED = true;
@@ -79,23 +75,41 @@ export default {
         this.writeAluResultToBusLED = false;
       }, 350);
     },
-    calculateAddition() {
+    calculateOperation() {
       if (this.registersValid) {
-        if (this.subtractionEnabled) {
+        if (this.controlLines.aluSubtractionEnabled) {
           return boolArraySubtraction(
-            this.registers[this.registerNames[0]],
-            this.registers[this.registerNames[1]],
+            [...this.registers[this.registerNames[0]]],
+            [...this.registers[this.registerNames[1]]],
           );
         } else {
           return boolArrayAddition(
-            this.registers[this.registerNames[0]],
-            this.registers[this.registerNames[1]],
+            [...this.registers[this.registerNames[0]]],
+            [...this.registers[this.registerNames[1]]],
           );
         }
       } else {
         console.log('This CPU needs some registers.');
         return;
       }
+    },
+    handleEnable() {
+      this.setControlLine({
+        line: 'aluEnabled',
+        value: !this.controlLines.aluEnabled,
+      });
+    },
+    handWriteEnable() {
+      this.setControlLine({
+        line: 'aluWriteResultToBus',
+        value: !this.controlLines.aluWriteResultToBus,
+      });
+    },
+    handleSubtractEnable() {
+      this.setControlLine({
+        line: 'aluSubtractionEnabled',
+        value: !this.controlLines.aluSubtractionEnabled,
+      });
     },
   },
 };

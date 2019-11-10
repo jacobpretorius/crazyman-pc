@@ -39,18 +39,11 @@ export default new Vuex.Store({
     },
     RESET_REGISTER: (state, payload) => {
       Vue.set(state.registers, payload, [
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
+        false, false, false, false, false, false, false, false,
       ]);
     },
 
-    // MEMORY
+    // RAM
     SET_MEMORY_LOCATION: (state, payload) => {
       Vue.set(state.memory, payload.memoryAddress, payload.value);
     },

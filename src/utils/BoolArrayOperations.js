@@ -8,26 +8,29 @@ function boolArrayAddition(arr1, arr2) {
   let arr1AsBase10 = boolArrayToBase10(arr1);
   let arr2AsBase10 = boolArrayToBase10(arr2);
 
-  let additionResult = arr1AsBase10 + arr2AsBase10;
+  let result = arr1AsBase10 + arr2AsBase10;
 
-  // Use the shortest length to prevent overflow
+  // Use the shortest length to prevent overflow of leading bits
   let shortestArrLength =
     arr1.length <= arr2.length ? arr1.length : arr2.length;
 
-  return base10ToBoolArray(additionResult, shortestArrLength);
+  return base10ToBoolArray(result, shortestArrLength);
 }
 
 function boolArraySubtraction(arr1, arr2) {
   let arr1AsBase10 = boolArrayToBase10(arr1);
   let arr2AsBase10 = boolArrayToBase10(arr2);
 
-  let additionResult = arr1AsBase10 - arr2AsBase10;
+  let result = arr1AsBase10 - arr2AsBase10;
+  if (result < 0) {
+    result = 0;
+  }
 
-  // Use the shortest length to prevent overflow
+  // Use the shortest length to prevent overflow of leading bits
   let shortestArrLength =
     arr1.length <= arr2.length ? arr1.length : arr2.length;
 
-  return base10ToBoolArray(additionResult, shortestArrLength);
+  return base10ToBoolArray(result, shortestArrLength);
 }
 
 export { boolArrayAddition, boolArraySubtraction };

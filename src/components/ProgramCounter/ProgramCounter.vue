@@ -2,7 +2,7 @@
   <div class="ProgramCounter">
     <h1>Program Counter</h1>
 
-    <div class="led" :class="{ redled : controlLines.programCounterOut }">
+    <div class="led" :class="{ redled : controlLines.pcWriteCounterToBus }">
       <span>w</span>
     </div>
     <div class="break"></div>
@@ -61,7 +61,7 @@ export default {
             this.programCounterValue.length,
           );
 
-          if (this.controlLines.programCounterOut) {
+          if (this.controlLines.pcWriteCounterToBus) {
             this.writePCToBus();
           }
         }
@@ -71,10 +71,10 @@ export default {
   methods: {
     ...mapMutations({
       fullSetBus: 'FULL_SET_BUS',
-      updateControlLine: 'UPDATE_CONTROL_LINES',
+      setControlLine: 'UPDATE_CONTROL_LINES',
     }),
     handleActiveClick() {
-      this.updateControlLine({
+      this.setControlLine({
         line: 'programCounterEnabled',
         value: !this.controlLines.programCounterEnabled,
       });
