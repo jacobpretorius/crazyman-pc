@@ -2,10 +2,10 @@
   <div class="ControlLogic">
     <h1>Control Logic</h1>
 
-    <h2>Instruction / <span class="red">Step</span></h2>
+    <h2>Instruction Register</h2>
     <div class="input-area">
       <input
-        v-for="(instructionLine, index) in 4"
+        v-for="(instructionLine, index) in programRegisterDisplay"
         :key="`instructionLine-${index}`"
         type="text"
         :value="instructionLine === true ? 1 : 0"
@@ -13,9 +13,12 @@
         :class="{ lineHigh : instructionLine === true }"
         disabled
       />
+    </div>
 
+    <h2>Step</h2>
+    <div class="input-area">
       <input
-        v-for="(stepLine, index) in 4"
+        v-for="(stepLine, index) in programStepDisplay"
         :key="`stepLine-${index}`"
         type="text"
         :value="stepLine === true ? 1 : 0"
@@ -81,8 +84,15 @@
         title="ALU Write result to BUS">
         <span>alw</span>
       </div>
+
+      <div class="led led--w" 
+        :class="{ redled : controlLines.clReadInstructionRegisterFromBus }"
+        title="Control Line read Instruction Register from BUS">
+        <span>clr</span>
+      </div>
     </div>
 
+    <button :class="{ active : this.enableProgramExecution }" @click="handleEnableProgramExecClick">ENABLE PROGRAM</button>
   </div>
 </template>
 
@@ -92,8 +102,82 @@ import { boolArrayToBase10, base10ToBoolArray } from '@/utils/BusConversions.js'
 
 export default {
   name: 'ControlLogic',
+  data: function() {
+    return {
+      programRegister: [false, false, false, false, false, false, false, false],
+      programStep: [false, false, false],
+      enableProgramExecution: false,
+    };
+  },
   computed: {
-    ...mapState(['controlLines']),
+    ...mapState(['bus', 'memory' ,'clockHigh', 'controlLines']),
+    programRegisterDisplay() {
+      return [...this.programRegister].reverse();
+    },
+    programStepDisplay() {
+      return [...this.programStep].reverse();
+    },
+  },
+  watch: {
+    clockHigh: function() {
+      if (this.enableProgramExecution) {
+        if (this.clockHigh) {
+          if (this.controlLines.clReadInstructionRegisterFromBus) {
+            this.programRegister = [...this.bus];
+          }
+        }else {
+          // Clock low
+          this.stepRunner();
+        }
+      }
+    },
+  },
+  methods: {
+    ...mapMutations({
+      setControlLine: 'UPDATE_CONTROL_LINES',
+    }),
+    // Run the five steps one by one
+    stepRunner() {
+      this.runStep();
+      var callCount = 1;
+      var repeater = window.setInterval(() => {
+        if (callCount < 5) {
+          // Increment active step
+          let activeStep = boolArrayToBase10(this.programStep) + 1;
+          this.programStep = base10ToBoolArray(activeStep, this.programStep.length);
+
+          this.runStep();
+          callCount += 1;
+        } else {
+          clearInterval(repeater);
+          this.programStep = [...this.programStep].fill(false);
+        }
+      }, 90);
+    },
+    runStep() {
+      // This gets called for each step of the exec
+      console.log(this.getVerb());
+    },
+    getVerb() {
+      if (JSON.stringify(this.programRegister.slice(4, this.programRegister.length)) === JSON.stringify([true, false, false, false])) {
+        return 'LDA';
+      }
+      return;
+    },
+    handleEnableProgramExecClick() {
+      this.enableProgramExecution = !this.enableProgramExecution;
+      if (this.enableProgramExecution) {
+        // Setup and resets
+        this.setControlLine({
+          line: 'ramWriteMemoryContentsToBus',
+          value: true,
+        });
+        this.setControlLine({
+          line: 'clReadInstructionRegisterFromBus',
+          value: true,
+        });
+      }
+    },
   },
 }
 </script>
@@ -102,7 +186,6 @@ export default {
   .ControlLogic {
     min-width: 340px;
     width: 35%;
-    height: 132px;
 
     .input-area .step-line {
       color: $color-red;

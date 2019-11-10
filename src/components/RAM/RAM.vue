@@ -55,6 +55,7 @@
 
     <button @click="readMemoryContentsFromBus">READ</button>
     <button @click="writeMemoryContentsToBus">WRITE</button>
+    <button @click="handleLoadSampleProgram">LOAD SAMPLE PROG</button>
 
   </div>
 </template>
@@ -62,6 +63,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { boolArrayToBase10, base10ToBoolArray } from '@/utils/BusConversions.js';
+import SAMPLE_RAM_PROGRAM from '@/data/SAMPLE_RAM_PROGRAM.js';
 
 export default {
   name: 'RAM',
@@ -117,7 +119,6 @@ export default {
   methods: {
     ...mapMutations({
       setMemoryLocation: 'SET_MEMORY_LOCATION',
-      setControlLine: 'UPDATE_CONTROL_LINES',
       fullSetBus: 'FULL_SET_BUS',
     }),
     initializeMemory() {
@@ -155,7 +156,12 @@ export default {
       this.fullSetBus([...this.memory[currentMemoryLocation]]);
        return;
     },
-
+    handleLoadSampleProgram() {
+      for (let i = 0; i < this.usableMemoryAddresses; i++) {
+        this.setMemoryLocation({ memoryAddress: i, value: SAMPLE_RAM_PROGRAM[i].reverse()});
+      }
+      console.log('Loaded sample program to RAM');
+    },
   },
 }
 </script>

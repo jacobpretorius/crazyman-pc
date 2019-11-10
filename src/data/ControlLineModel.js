@@ -18,6 +18,8 @@ const controlLineModel = {
   aluSubtractionEnabled: false, // false = addition mode
   aluWriteResultToBus: false, // write calc result to bus
 
+  // CONTROL LOGIC
+  clReadInstructionRegisterFromBus: false,
 };
 
 export default controlLineModel;
