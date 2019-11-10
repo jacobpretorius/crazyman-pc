@@ -11,7 +11,7 @@
 
 <style lang="scss">
 #nav {
-  padding: 2rem;
+  padding: 1rem;
 
   a {
     font-weight: bold;

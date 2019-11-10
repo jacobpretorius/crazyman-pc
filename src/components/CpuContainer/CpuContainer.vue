@@ -6,13 +6,14 @@
       <BusOutput class="bus-output" />
       <ProgramCounter class="program-counter" />
       <Clock class="clock" />
+      <BinaryAdder class="binary-adder" />
 
       <Register class="register" register-name="A" />
       <Register class="register" register-name="B" />
-
-      <BinaryAdder class="binary-adder" />
-      <RAM />
       <ALU class="alu" :registerNames="['A','B']" />
+
+      <RAM />
+      <ControlLogic />
 
     </div>
   </div>
@@ -22,23 +23,25 @@
 import { mapState } from 'vuex';
 
 import BusOutput from '../BusOutput/BusOutput.vue';
-import ALU from '../ALU/ALU.vue';
 import Clock from '../Clock/Clock.vue';
-import Register from '../Register/Register.vue';
 import BinaryAdder from '../BinaryAdder/BinaryAdder.vue';
+import Register from '../Register/Register.vue';
+import ALU from '../ALU/ALU.vue';
 import ProgramCounter from '../ProgramCounter/ProgramCounter.vue';
 import RAM from '../RAM/RAM.vue';
+import ControlLogic from '../ControlLogic/ControlLogic.vue';
 
 export default {
   name: 'CpuContainer',
   components: {
     BusOutput,
-    ALU,
     Clock,
-    Register,
     BinaryAdder,
+    Register,
+    ALU,
     ProgramCounter,
     RAM,
+    ControlLogic,
   },
   computed: mapState({
     items: state => state,
@@ -50,36 +53,14 @@ export default {
 .cpu-container {
   .flexer {
     display: flex;
-    margin-top: 2rem;
+    margin-top: 1rem;
     flex-wrap: wrap;
     width: 100%;
 
-    .bus-output {
-      width: 40%;
-    }
-
-    .program-counter {
-      width: 25%;
-    }
-
-    .clock {
-      width: 25%;
-    }
-
-    .register {
-      width: 33%;
-    }
-
-    .binary-adder {
-      width: 20%;
-    }
-
-    .ALU {
-      width: 20%;
-    }
-
-    .RAM {
-      width: 30%;
+    > * {
+      padding: 5px;
+      margin: 0 5px 5px 0;
+      border: 2px solid $color-eucalyptus;
     }
 
     h1 {
@@ -98,7 +79,9 @@ export default {
         width: 10px;
         padding: 3px;
         margin: 2px;
-        border: 2px solid $color-gunmetal;
+        border: 2px solid grey;
+        color: $color-gunmetal;
+        background-color: $color-white-smoke;
 
         &.lineHigh {
           border: 2px solid $color-eucalyptus;
@@ -109,12 +92,12 @@ export default {
     .led {
       width: 20px;
       height: 20px;
-      background-color: $color-gunmetal;
+      background-color: grey;
       padding: 0 2px;
       margin: 2px 2px 5px 2px;
       float: right;
       border-radius: 10px;
-      opacity: 0.5;
+      opacity: 0.8;
       text-align: center;
       color: white;
       cursor: not-allowed;
@@ -137,7 +120,7 @@ export default {
     }
 
     .redled {
-      background-color: $color-Red;
+      background-color: $color-red;
       opacity: 1;
     }
 
@@ -150,10 +133,18 @@ export default {
       background-color: $color-eucalyptus;
     }
 
+    .red {
+      color: $color-red;
+    }
+
+    .blue {
+      color: $color-electric-blue;
+    }
+
     button {
       padding: 2px 4px;
       margin: 2px;
-      border: 1px solid $color-gunmetal;
+      border: 1px solid $color-white-smoke;
     }
   }
 }

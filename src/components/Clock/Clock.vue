@@ -73,9 +73,7 @@ export default {
 
 <style scoped lang="scss">
 .Clock {
-  border: 2px solid $color-eucalyptus;
-  padding: 5px;
-  margin: 5px;
   min-width: 112px;
+  width: 10%;
 }
 </style>

@@ -52,9 +52,7 @@ export default {
 
 <style scoped lang="scss">
 .BinaryAdder {
-  border: 2px solid $color-eucalyptus;
-  padding: 5px;
-  margin: 5px;
   min-width: 88px;
+  width: 10%;
 }
 </style>

@@ -32,6 +32,7 @@
         :value="marBusLine === true ? 1 : 0"
         class="bus-line"
         :class="{ lineHigh : marBusLine === true }"
+        disabled
       />
     </div>
 
@@ -48,6 +49,7 @@
         :value="busLine === true ? 1 : 0"
         class="bus-line"
         :class="{ lineHigh : busLine === true }"
+        disabled
       />
     </div>
 
@@ -160,9 +162,7 @@ export default {
 
 <style scoped lang="scss">
 .RAM {
-  border: 2px solid $color-eucalyptus;
-  padding: 5px;
-  margin: 5px;
   min-width: 163px;
+  width: 30%;
 }
 </style>

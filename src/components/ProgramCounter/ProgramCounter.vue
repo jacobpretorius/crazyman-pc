@@ -94,9 +94,7 @@ export default {
 
 <style scoped lang="scss">
 .ProgramCounter {
-  border: 2px solid $color-eucalyptus;
-  padding: 5px;
-  margin: 5px;
   min-width: 163px;
+  width: 18%;
 }
 </style>

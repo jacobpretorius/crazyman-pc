@@ -18,7 +18,7 @@
         :value="registerLine === true ? 1 : 0"
         class="bus-line"
         :class="{ lineHigh : registerLine === true }"
-        @keypress="checkValueValidBinaryChar(index, $event)"
+        disabled
       />
     </div>
 
@@ -86,19 +86,6 @@ export default {
     handleClearRegister() {
       this.resetRegister(this.registerName);
     },
-    checkValueValidBinaryChar(index, event) {
-      if (event.key === '1' || event.key === '0') {
-        let updatedRegister = [...this.register];
-        updatedRegister[index] = event.key === '1';
-
-        this.setRegister({
-          registerName: this.registerName,
-          value: updatedRegister,
-        });
-        return;
-      }
-      event.preventDefault();
-    },
     blinkReadEnabledLed() {
       this.readEnabledLED = true;
       window.setTimeout(() => {
@@ -117,9 +104,7 @@ export default {
 
 <style scoped lang="scss">
 .Register {
-  border: 2px solid $color-eucalyptus;
-  padding: 5px;
-  margin: 5px;
   min-width: 206px;
+  width: 30%;
 }
 </style>

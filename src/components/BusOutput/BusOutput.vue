@@ -10,6 +10,7 @@
         :value="busLine === true ? 1 : 0"
         class="bus-line"
         :class="{ lineHigh : busLine === true }"
+        disabled
       />
     </div>
 
@@ -46,9 +47,7 @@ export default {
 
 <style scoped lang="scss">
 .BusOutput {
-  border: 2px solid $color-eucalyptus;
-  padding: 5px;
-  margin: 5px;
   min-width: 205px;
+  width: 30%;
 }
 </style>

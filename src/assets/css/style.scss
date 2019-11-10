@@ -10,7 +10,7 @@ h1, h2, h3, h4, h5, h6 {
 *, :after, :before {
   border-width: 0;
   border-style: solid;
-  border-color: #e2e8f0;
+  border-color: #f4f4f0;
 }
 
 button, input, optgroup, select, textarea {
@@ -32,4 +32,6 @@ html {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #4a4a4a;
+  color: #f4f4f0;
 }

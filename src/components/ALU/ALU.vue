@@ -120,13 +120,11 @@ export default {
 
 <style scoped lang="scss">
 .ALU {
+  min-width: 145px;
+  width: 20%;
+
   h1 {
     display: inline-block;
   }
-
-  border: 2px solid $color-eucalyptus;
-  padding: 5px;
-  margin: 5px;
-  min-width: 145px;
 }
 </style>
