@@ -54,11 +54,6 @@
         <span>rmr</span>
       </div>
       <div class="led led--w" 
-        :class="{ redled : controlLines.ramMemoryAddressRegisterIncrement }"
-        title="Increment RAM memory address register">
-        <span>rmi</span>
-      </div>
-      <div class="led led--w" 
         :class="{ redled : controlLines.ramWriteMemoryContentsToBus }"
         title="Write RAM contents to BUS">
         <span>rcw</span>
@@ -90,15 +85,21 @@
         title="Control Line read Instruction Register from BUS">
         <span>clr</span>
       </div>
+      <div class="led led--w" 
+        :class="{ redled : controlLines.clWriteInstructionRegisterToBus }"
+        title="Control Line write Instruction Register to BUS">
+        <span>clw</span>
+      </div>
     </div>
 
-    <button :class="{ active : this.enableProgramExecution }" @click="handleEnableProgramExecClick">ENABLE PROGRAM</button>
+    <button :class="{ active : this.enableProgramExecution }" @click="handleEnableProgramExecClick">ENABLE CL</button>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { boolArrayToBase10, base10ToBoolArray } from '@/utils/BusConversions.js';
+import resetControlLineModel from '@/data/ControlLineModel.js';
 
 export default {
   name: 'ControlLogic',
@@ -106,7 +107,7 @@ export default {
     return {
       programRegister: [false, false, false, false, false, false, false, false],
       programStep: [false, false, false],
-      enableProgramExecution: false,
+      enableProgramExecution: true,
     };
   },
   computed: {
@@ -125,9 +126,15 @@ export default {
           if (this.controlLines.clReadInstructionRegisterFromBus) {
             this.programRegister = [...this.bus];
           }
+
+          if (this.controlLines.clWriteInstructionRegisterToBus) {
+            this.fullSetBus = [...this.programRegister];
+          }
+
+          this.stepRunner();
         }else {
           // Clock low
-          this.stepRunner();
+          //this.stepRunner();
         }
       }
     },
@@ -135,12 +142,15 @@ export default {
   methods: {
     ...mapMutations({
       setControlLine: 'UPDATE_CONTROL_LINES',
+      resetControlLines: 'RESET_CONTROL_LINES',
+      fullSetBus: 'FULL_SET_BUS',
     }),
-    // Run the five steps one by one
     stepRunner() {
+      // Run the five steps one by one
       this.runStep();
-      var callCount = 1;
-      var repeater = window.setInterval(() => {
+
+      let callCount = 1;
+      let repeater = window.setInterval(() => {
         if (callCount < 5) {
           // Increment active step
           let activeStep = boolArrayToBase10(this.programStep) + 1;
@@ -156,7 +166,65 @@ export default {
     },
     runStep() {
       // This gets called for each step of the exec
-      console.log(this.getVerb());
+      let activeStep = boolArrayToBase10(this.programStep);
+      console.log(activeStep);
+
+      // Reset our control lines to initial state
+      //this.resetControlLines(Object.assign({}, resetControlLineModel));
+
+      // Step 0 and 1 are always from FETCH
+      if (activeStep === 0) {
+        this.setControlLine({
+          line: 'pcWriteCounterToBus',
+          value: true,
+        });
+
+        this.setControlLine({
+          line: 'ramMemoryAddressRegisterReadFromBus',
+          value: true,
+        });
+      }
+
+      if (activeStep === 1) {
+        this.setControlLine({
+          line: 'ramWriteMemoryContentsToBus',
+          value: true,
+        });
+
+        this.setControlLine({
+          line: 'clReadInstructionRegisterFromBus',
+          value: true,
+        });
+      }
+
+      // Test with LDA 
+      //console.log(this.programRegister.slice(4, this.programRegister.length));
+      if (this.getVerb() === 'LDA') {
+        if (activeStep === 2) {
+          this.setControlLine({
+            line: 'clWriteInstructionRegisterToBus',
+            value: true,
+          });
+
+          this.setControlLine({
+            line: 'ramMemoryAddressRegisterReadFromBus',
+            value: true,
+          });
+        }
+
+        if (activeStep === 3) {
+          this.setControlLine({
+            line: 'ramWriteMemoryContentsToBus',
+            value: true,
+          });
+
+          this.setControlLine({
+            line: 'regAReadContentsFromBus',
+            value: true,
+          });
+        }
+      }
+
     },
     getVerb() {
       if (JSON.stringify(this.programRegister.slice(4, this.programRegister.length)) === JSON.stringify([true, false, false, false])) {
@@ -166,17 +234,6 @@ export default {
     },
     handleEnableProgramExecClick() {
       this.enableProgramExecution = !this.enableProgramExecution;
-      if (this.enableProgramExecution) {
-        // Setup and resets
-        this.setControlLine({
-          line: 'ramWriteMemoryContentsToBus',
-          value: true,
-        });
-        this.setControlLine({
-          line: 'clReadInstructionRegisterFromBus',
-          value: true,
-        });
-      }
     },
   },
 }

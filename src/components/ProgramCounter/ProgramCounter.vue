@@ -46,8 +46,8 @@ export default {
   },
   watch: {
     clockHigh: function() {
-      if (this.controlLines.programCounterEnabled) {
-        if (this.clockHigh) {
+      if (this.clockHigh) {
+        if (this.controlLines.programCounterEnabled) {
           let busAsBase10 = boolArrayToBase10(this.programCounterValue);
 
           // I know, I know. This is dirty. I'll get round to changing it sometime.
@@ -60,10 +60,10 @@ export default {
             busAsBase10,
             this.programCounterValue.length,
           );
+        }
 
-          if (this.controlLines.pcWriteCounterToBus) {
-            this.writePCToBus();
-          }
+        if (this.controlLines.pcWriteCounterToBus) {
+          this.writePCToBus();
         }
       }
     },
@@ -81,10 +81,8 @@ export default {
     },
     writePCToBus() {
       let tempBus = [...this.bus];
-      for (let i = 0; i < tempBus.length; i++) {
-        if (this.programCounterValue[i]) {
-          tempBus[i] = this.programCounterValue[i];
-        }
+      for (let i = 0; i < this.programCounterValue.length; i++) {
+        tempBus[i] = this.programCounterValue[i]
       }
       this.fullSetBus(tempBus);
     },

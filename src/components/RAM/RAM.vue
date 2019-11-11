@@ -16,11 +16,6 @@
       title="Read MAR location from BUS">
       <span>mr</span>
     </div>
-    <div class="led led--w" 
-      :class="{ blueled : controlLines.ramMemoryAddressRegisterIncrement }"
-      title="MAR increment on clock pulse">
-      <span>m+</span>
-    </div>
     <div class="break"></div>
 
     <h2>Memory Address Register</h2>
@@ -55,7 +50,7 @@
 
     <button @click="readMemoryContentsFromBus">READ</button>
     <button @click="writeMemoryContentsToBus">WRITE</button>
-    <button @click="handleLoadSampleProgram">LOAD SAMPLE PROG</button>
+    <button class="sample-prog" @click="handleLoadSampleProgram">LOAD SAMPLE PROG</button>
 
   </div>
 </template>
@@ -93,11 +88,6 @@ export default {
       if (this.clockHigh) {
         if (this.controlLines.ramMemoryAddressRegisterReadFromBus) {
           this.memoryAddressRegisterReadFromBus();
-          return;
-        }
-
-        if (this.controlLines.ramMemoryAddressRegisterIncrement) {
-          this.incrementMemoryAddressRegister();
           return;
         }
 
@@ -170,5 +160,9 @@ export default {
 .RAM {
   min-width: 163px;
   width: 30%;
+
+  .sample-prog {
+    color: $color-red;
+  }
 }
 </style>

@@ -41,13 +41,12 @@ export default {
   },
   data: function() {
     return {
-      readFromBus: false, // temp
       readEnabledLED: false,
       writeEnabledLED: false,
     };
   },
   computed: {
-    ...mapState(['bus', 'clockHigh', 'registers']),
+    ...mapState(['bus', 'clockHigh', 'registers', 'controlLines']),
     register: function() {
       return this.registers[this.registerName];
     },
@@ -57,8 +56,19 @@ export default {
   },
   watch: {
     clockHigh: function() {
+      // Write to bus
+      if (this.controlLines.regAWriteToBus && this.registerName === 'A') {
+        this.writeRegisterToBus();
+      }
+      if (this.controlLines.regAWriteToBus && this.registerName === 'B') {
+        this.writeRegisterToBus();
+      }
+
       // Read from BUS
-      if (this.readFromBus) {
+      if (this.controlLines.regAReadContentsFromBus && this.registerName === 'A') {
+        this.loadRegisterFromBus();
+      }
+      if (this.controlLines.regBReadContentsFromBus && this.registerName === 'B') {
         this.loadRegisterFromBus();
       }
     },

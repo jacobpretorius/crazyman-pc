@@ -9,6 +9,9 @@
 // LDA MemLoc - Load contents of memloc to A register
 // 0001
 
+// LDB MemLoc - Load contents of memloc to B register
+// 0011
+
 // ADD MemLOC - Add the contents of Memloc to register A
 // 0010
 
@@ -20,20 +23,26 @@
 
 // FYI: These values are standard binary format, not display flipped
 const SAMPLE_RAM_PROGRAM = [
-  // 0- LDA 14
+  // 0- NOOP INIT
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+
+  // 1- LDA 14
   [false, false, false, true, true, true, true, false],
 
-  // 1- ADD 15
+  // 2- ADD 15
   [false, false, true, true, true, true, true, true],
 
-  // 2- OUT
+  // 3- OUT
   [true, true, true, false, false, false, false, false],
 
-  // 3- HLT
+  // 4- HLT
   [true, true, true, true, false, false, false, false],
 
-  // 4-13- NOOPS
-  [false, false, false, false, false, false, false, false],
+  // 5-13- NOOPS
   [false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false],

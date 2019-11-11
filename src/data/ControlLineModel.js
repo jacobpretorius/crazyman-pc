@@ -4,14 +4,19 @@ const controlLineModel = {
   halt: false, // Stop the clock
 
   // PROGRAM COUNTER
-  programCounterEnabled: false, // Increment PC
+  programCounterEnabled: true, // Increment PC on CLOCKHI
   pcWriteCounterToBus: false, // Write PC to bus
+
+  // REGISTERS
+  regAWriteToBus: false,
+  regAReadContentsFromBus: false,
+  regBWriteToBus: false,
+  regBReadContentsFromBus: false,
 
   // RAM
   ramMemoryAddressRegisterReadFromBus: false, // Read MAR from bus
-  ramMemoryAddressRegisterIncrement: false, // Increment on clockhigh
-  ramWriteMemoryContentsToBus: false, // TODO
-  ramReadMemoryContentsFromBus: false, // TODO
+  ramWriteMemoryContentsToBus: false,
+  ramReadMemoryContentsFromBus: false,
 
   // ALU
   aluEnabled: false,
@@ -20,6 +25,7 @@ const controlLineModel = {
 
   // CONTROL LOGIC
   clReadInstructionRegisterFromBus: false,
+  clWriteInstructionRegisterToBus: false,
 };
 
 export default controlLineModel;
