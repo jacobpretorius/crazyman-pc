@@ -7,6 +7,7 @@
       <ProgramCounter class="program-counter" />
       <Clock class="clock" />
       <BinaryAdder class="binary-adder" />
+      <DecimalDisplay />
 
       <Register class="register" register-name="A" />
       <Register class="register" register-name="B" />
@@ -30,6 +31,7 @@ import ALU from '../ALU/ALU.vue';
 import ProgramCounter from '../ProgramCounter/ProgramCounter.vue';
 import RAM from '../RAM/RAM.vue';
 import ControlLogic from '../ControlLogic/ControlLogic.vue';
+import DecimalDisplay from '../DecimalDisplay/DecimalDisplay.vue';
 
 export default {
   name: 'CpuContainer',
@@ -42,6 +44,7 @@ export default {
     ProgramCounter,
     RAM,
     ControlLogic,
+    DecimalDisplay,
   },
   computed: mapState({
     items: state => state,

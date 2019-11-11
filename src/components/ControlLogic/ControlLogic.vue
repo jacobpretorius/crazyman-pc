@@ -93,6 +93,8 @@
     </div>
 
     <button :class="{ active : this.enableProgramExecution }" @click="handleEnableProgramExecClick">ENABLE CL</button>
+    <button @click="readControlRegisterFromBus">READ</button>
+    <button @click="writeControlRegisterToBus">WRITE</button>
   </div>
 </template>
 
@@ -107,7 +109,7 @@ export default {
     return {
       programRegister: [false, false, false, false, false, false, false, false],
       programStep: [false, false, false],
-      enableProgramExecution: true,
+      enableProgramExecution: false,
     };
   },
   computed: {
@@ -124,11 +126,11 @@ export default {
       if (this.enableProgramExecution) {
         if (this.clockHigh) {
           if (this.controlLines.clReadInstructionRegisterFromBus) {
-            this.programRegister = [...this.bus];
+            this.readControlRegisterFromBus();
           }
 
           if (this.controlLines.clWriteInstructionRegisterToBus) {
-            this.fullSetBus = [...this.programRegister];
+            this.writeControlRegisterToBus;
           }
 
           this.stepRunner();
@@ -145,6 +147,12 @@ export default {
       resetControlLines: 'RESET_CONTROL_LINES',
       fullSetBus: 'FULL_SET_BUS',
     }),
+    readControlRegisterFromBus() {
+      this.programRegister = [...this.bus];
+    },
+    writeControlRegisterToBus() {
+      this.fullSetBus = [...this.programRegister];
+    },
     stepRunner() {
       // Run the five steps one by one
       this.runStep();

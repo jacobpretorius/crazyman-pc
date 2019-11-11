@@ -34,6 +34,7 @@
     <button @click="incrementMemoryAddressRegister">+</button>
     <button @click="decrementMemoryAddressRegister">-</button>
     <button @click="incrementMemoryAddressRegister">PULSE</button>
+    <button @click="memoryAddressRegisterReadFromBus">READ</button>
 
     <h2>Address Contents</h2>
     <div class="input-area">

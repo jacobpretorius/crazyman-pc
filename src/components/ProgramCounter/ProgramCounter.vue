@@ -80,7 +80,7 @@ export default {
       });
     },
     writePCToBus() {
-      let tempBus = [...this.bus];
+      let tempBus = [...this.bus].fill(false);
       for (let i = 0; i < this.programCounterValue.length; i++) {
         tempBus[i] = this.programCounterValue[i]
       }
@@ -92,7 +92,7 @@ export default {
 
 <style scoped lang="scss">
 .ProgramCounter {
-  min-width: 163px;
-  width: 18%;
+  min-width: 133px;
+  width: 15%;
 }
 </style>

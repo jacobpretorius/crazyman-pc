@@ -25,10 +25,6 @@
 const SAMPLE_RAM_PROGRAM = [
   // 0- NOOP INIT
   [false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false],
 
   // 1- LDA 14
   [false, false, false, true, true, true, true, false],
@@ -54,10 +50,10 @@ const SAMPLE_RAM_PROGRAM = [
   [false, false, false, false, false, false, false, false],
 
   // 14- Binary value 30
-  [false, true, false, false, true, false, false, false],
+  [false, false, false, true, true, true, true, false],
 
   // 15- Binary value 12
-  [false, false, true, false, false, false, false, false],
+  [false, false, false, false, true, true, false, false],
 ];
 
 export default SAMPLE_RAM_PROGRAM;
