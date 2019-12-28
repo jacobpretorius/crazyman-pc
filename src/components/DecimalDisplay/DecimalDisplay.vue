@@ -27,9 +27,11 @@ export default {
   width: 10%;
 
   .display {
-    color: red;
+    color: white;
     background-color: grey;
     width: 50px;
+    border: 2px solid $color-red;
+    padding: 5px;
   }
 }
 </style>

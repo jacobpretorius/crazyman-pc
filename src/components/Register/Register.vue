@@ -55,12 +55,12 @@ export default {
     },
   },
   watch: {
-    clockHigh: function() {
+    controlLines: function() {
       // Write to bus
       if (this.controlLines.regAWriteToBus && this.registerName === 'A') {
         this.writeRegisterToBus();
       }
-      if (this.controlLines.regAWriteToBus && this.registerName === 'B') {
+      if (this.controlLines.regBWriteToBus && this.registerName === 'B') {
         this.writeRegisterToBus();
       }
 

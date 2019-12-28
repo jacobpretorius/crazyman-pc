@@ -19,8 +19,7 @@
     </div>
     <div class="break"></div>
 
-    <button :class="{ active : controlLines.aluEnabled }" @click="handleEnable">ENABLE</button>
-    <button :class="{ active : controlLines.aluWriteResultToBus }" @click="handWriteEnable">WRITE</button>
+    <button :class="{ active : controlLines.aluWriteResultToBus }" @click="writeResultToBus">WRITE</button>
     <button :class="{ active : controlLines.aluSubtractionEnabled }" @click="handleSubtractEnable">MIN</button>
   </div>
 </template>
@@ -45,18 +44,15 @@ export default {
     };
   },
   computed: {
-    ...mapState(['clockHigh', 'registers', 'controlLines']),
+    ...mapState(['bus', 'registers', 'controlLines']),
     registersValid() {
       return this.registers[this.registerNames[0]].length & this.registers[this.registerNames[1]].length;
     },
   },
   watch: {
-    clockHigh: function() {
-      if (this.controlLines.aluEnabled) {
-        let result = this.calculateOperation();
-        if (result && this.controlLines.aluWriteResultToBus) {
-          this.fullSetBus(result);
-        }
+    controlLines: function() { 
+      if (this.controlLines.aluWriteResultToBus) {
+        this.fullSetBus(this.calculateOperation());
       }
     },
   },
@@ -66,17 +62,10 @@ export default {
       setControlLine: 'UPDATE_CONTROL_LINES',
     }),
     writeResultToBus() {
-      this.blinkWriteEnabledLed();
       let result = this.calculateOperation();
       if (result) {
         this.fullSetBus(result);
       }
-    },
-    blinkWriteEnabledLed() {
-      this.writeAluResultToBusLED = true;
-      window.setTimeout(() => {
-        this.writeAluResultToBusLED = false;
-      }, 350);
     },
     calculateOperation() {
       if (this.registersValid) {
@@ -95,18 +84,6 @@ export default {
         console.log('This CPU needs some registers.');
         return;
       }
-    },
-    handleEnable() {
-      this.setControlLine({
-        line: 'aluEnabled',
-        value: !this.controlLines.aluEnabled,
-      });
-    },
-    handWriteEnable() {
-      this.setControlLine({
-        line: 'aluWriteResultToBus',
-        value: !this.controlLines.aluWriteResultToBus,
-      });
     },
     handleSubtractEnable() {
       this.setControlLine({

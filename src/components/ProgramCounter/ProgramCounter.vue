@@ -61,10 +61,16 @@ export default {
             this.programCounterValue.length,
           );
         }
-
-        if (this.controlLines.pcWriteCounterToBus) {
-          this.writePCToBus();
-        }
+      }
+    },
+    programCounterValue: function() {
+      if (this.controlLines.pcWriteCounterToBus) {
+        this.writePCToBus();
+      }
+    },
+    controlLines: function() { 
+      if (this.controlLines.pcWriteCounterToBus) {
+        this.writePCToBus();
       }
     },
   },

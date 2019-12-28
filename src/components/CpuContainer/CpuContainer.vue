@@ -6,8 +6,7 @@
       <BusOutput class="bus-output" />
       <ProgramCounter class="program-counter" />
       <Clock class="clock" />
-      <BinaryAdder class="binary-adder" />
-      <DecimalDisplay />
+      <DecimalDisplay class="decimal-display"/>
 
       <Register class="register" register-name="A" />
       <Register class="register" register-name="B" />
@@ -25,7 +24,6 @@ import { mapState } from 'vuex';
 
 import BusOutput from '../BusOutput/BusOutput.vue';
 import Clock from '../Clock/Clock.vue';
-import BinaryAdder from '../BinaryAdder/BinaryAdder.vue';
 import Register from '../Register/Register.vue';
 import ALU from '../ALU/ALU.vue';
 import ProgramCounter from '../ProgramCounter/ProgramCounter.vue';
@@ -38,7 +36,6 @@ export default {
   components: {
     BusOutput,
     Clock,
-    BinaryAdder,
     Register,
     ALU,
     ProgramCounter,

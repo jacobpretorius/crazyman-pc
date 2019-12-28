@@ -65,11 +65,6 @@
       </div>
 
       <div class="led led--w" 
-        :class="{ redled : controlLines.aluEnabled }"
-        title="ALU enabled">
-        <span>ale</span>
-      </div>
-      <div class="led led--w" 
         :class="{ redled : controlLines.aluSubtractionEnabled }"
         title="ALU subtraction mode">
         <span>als</span>
@@ -101,7 +96,8 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { boolArrayToBase10, base10ToBoolArray } from '@/utils/BusConversions.js';
-// import resetControlLineModel from '@/data/ControlLineModel.js';
+import resetControlLineModel from '@/data/ControlLineModel.js';
+import { getVerb } from '@/utils/VerbHelper.js';
 
 export default {
   name: 'ControlLogic',
@@ -113,7 +109,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['bus', 'memory' ,'clockHigh', 'controlLines']),
+    ...mapState(['bus', 'memory' ,'clockHigh', 'controlLines', 'registers']),
     programRegisterDisplay() {
       return [...this.programRegister].reverse();
     },
@@ -122,28 +118,33 @@ export default {
     },
   },
   watch: {
+    bus: function () {
+      if (this.controlLines.clReadInstructionRegisterFromBus) {
+        this.readControlRegisterFromBus();
+      }
+
+      if (this.controlLines.clWriteInstructionRegisterToBus) {
+        this.writeControlRegisterToBus;
+      }
+    },
+    controlLines: function () {
+      if (this.controlLines.clReadInstructionRegisterFromBus) {
+        this.readControlRegisterFromBus();
+      }
+
+      if (this.controlLines.clWriteInstructionRegisterToBus) {
+        this.writeControlRegisterToBus;
+      }
+    },
     clockHigh: function() {
-      if (this.enableProgramExecution) {
-        if (this.clockHigh) {
-          if (this.controlLines.clReadInstructionRegisterFromBus) {
-            this.readControlRegisterFromBus();
-          }
-
-          if (this.controlLines.clWriteInstructionRegisterToBus) {
-            this.writeControlRegisterToBus;
-          }
-
-          this.stepRunner();
-        }else {
-          // Clock low
-          // this.stepRunner();
-        }
+      if (this.enableProgramExecution && this.clockHigh) {
+        this.stepRunner();
       }
     },
   },
   methods: {
     ...mapMutations({
-      setControlLine: 'UPDATE_CONTROL_LINES',
+      setControlLineHigh: 'SET_CONTROL_LINE_HIGH',
       resetControlLines: 'RESET_CONTROL_LINES',
       fullSetBus: 'FULL_SET_BUS',
     }),
@@ -175,70 +176,82 @@ export default {
     runStep() {
       // This gets called for each step of the exec
       let activeStep = boolArrayToBase10(this.programStep);
-      console.log(activeStep);
 
       // Reset our control lines to initial state
-      // this.resetControlLines(Object.assign({}, resetControlLineModel));
+      this.resetControlLines(Object.assign({}, resetControlLineModel));
 
       // Step 0 and 1 are always from FETCH
       if (activeStep === 0) {
-        this.setControlLine({
-          line: 'pcWriteCounterToBus',
-          value: true,
-        });
-
-        this.setControlLine({
-          line: 'ramMemoryAddressRegisterReadFromBus',
-          value: true,
-        });
+        this.setControlLineHigh('pcWriteCounterToBus');
+        this.setControlLineHigh('ramMemoryAddressRegisterReadFromBus');
       }
 
       if (activeStep === 1) {
-        this.setControlLine({
-          line: 'ramWriteMemoryContentsToBus',
-          value: true,
-        });
-
-        this.setControlLine({
-          line: 'clReadInstructionRegisterFromBus',
-          value: true,
-        });
+        this.setControlLineHigh('ramWriteMemoryContentsToBus');
+        this.setControlLineHigh('clReadInstructionRegisterFromBus');
       }
 
-      // Test with LDA 
-      // console.log(this.programRegister.slice(4, this.programRegister.length));
-      if (this.getVerb() === 'LDA') {
-        if (activeStep === 2) {
-          this.setControlLine({
-            line: 'clWriteInstructionRegisterToBus',
-            value: true,
-          });
+      // =============================================================
+      // MAIN PC LOGIC HERE for steps 2, 3 & 4 to VERB operations
 
-          this.setControlLine({
-            line: 'ramMemoryAddressRegisterReadFromBus',
-            value: true,
-          });
+      // LDA
+      if (getVerb(this.programRegister) === 'LDA') {
+        if (activeStep === 2) {
+          this.setControlLineHigh('clWriteInstructionRegisterToBus');
+          this.setControlLineHigh('ramMemoryAddressRegisterReadFromBus');
         }
 
         if (activeStep === 3) {
-          this.setControlLine({
-            line: 'ramWriteMemoryContentsToBus',
-            value: true,
-          });
-
-          this.setControlLine({
-            line: 'regAReadContentsFromBus',
-            value: true,
-          });
+          this.setControlLineHigh('ramWriteMemoryContentsToBus');
+          this.setControlLineHigh('regAReadContentsFromBus');
         }
       }
 
-    },
-    getVerb() {
-      if (JSON.stringify(this.programRegister.slice(4, this.programRegister.length)) === JSON.stringify([true, false, false, false])) {
-        return 'LDA';
+      // LDB
+      if (getVerb(this.programRegister) === 'LDB') {
+        if (activeStep === 2) {
+          this.setControlLineHigh('clWriteInstructionRegisterToBus');
+          this.setControlLineHigh('ramMemoryAddressRegisterReadFromBus');
+        }
+
+        if (activeStep === 3) {
+          this.setControlLineHigh('ramWriteMemoryContentsToBus');
+        }
+
+        if (activeStep === 4){
+          this.setControlLineHigh('regBReadContentsFromBus');
+        }
       }
-      return;
+
+      // ADD
+      if (getVerb(this.programRegister) === 'ADD') {
+        if (activeStep === 2) {
+          this.setControlLineHigh('aluWriteResultToBus');
+        }
+
+        if (activeStep === 3) {
+          this.setControlLineHigh('regAReadContentsFromBus');
+        }
+      }
+
+      // OUT
+      if (getVerb(this.programRegister) === 'OUT') {
+        if (activeStep === 4) {
+          console.log(' ----------- OUT ----------- ');
+          console.log(boolArrayToBase10(this.registers['A']));
+          console.log(' ----------- OUT ----------- ');
+        }
+      }
+
+      // HLT
+      if (getVerb(this.programRegister) === 'HLT') {
+        this.setControlLineHigh('halt');
+        if (activeStep === 2) {
+          console.log(' ----------- HALT CALLED ----------- ');
+        }
+      }
+
+      // =============================================================
     },
     handleEnableProgramExecClick() {
       this.enableProgramExecution = !this.enableProgramExecution;

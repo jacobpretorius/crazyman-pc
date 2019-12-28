@@ -84,23 +84,28 @@ export default {
     },
   },
   watch: {
-    clockHigh: function() {
-      // We may move some of this to clock low...
-      if (this.clockHigh) {
-        if (this.controlLines.ramMemoryAddressRegisterReadFromBus) {
-          this.memoryAddressRegisterReadFromBus();
-          return;
-        }
+    // If the bus is updated we need to keep reading if set to true
+    bus: function() {
+      if (this.controlLines.ramMemoryAddressRegisterReadFromBus) {
+        this.memoryAddressRegisterReadFromBus();
+      }
 
-        if (this.controlLines.ramReadMemoryContentsFromBus) {
-          this.readMemoryContentsFromBus();
-          return;
-        }
+      if (this.controlLines.ramReadMemoryContentsFromBus) {
+        this.readMemoryContentsFromBus();
+      }
+    },
+    // Similar to the above, if we missed an update force update on cl change
+    controlLines: function() {
+      if (this.controlLines.ramMemoryAddressRegisterReadFromBus) {
+        this.memoryAddressRegisterReadFromBus();
+      }
 
-        if (this.controlLines.ramWriteMemoryContentsToBus) {
-          this.writeMemoryContentsToBus();
-          return;
-        }
+      if (this.controlLines.ramWriteMemoryContentsToBus) {
+        this.writeMemoryContentsToBus();
+      }
+
+      if (this.controlLines.ramReadMemoryContentsFromBus) {
+        this.readMemoryContentsFromBus();
       }
     },
   },
@@ -140,12 +145,10 @@ export default {
         memoryAddress: currentMemoryLocation,
         value: [...this.bus],
       });
-       return;
     },
     writeMemoryContentsToBus() {
       let currentMemoryLocation = boolArrayToBase10(this.memoryAddressRegister);
       this.fullSetBus([...this.memory[currentMemoryLocation]]);
-       return;
     },
     handleLoadSampleProgram() {
       for (let i = 0; i < this.usableMemoryAddresses; i++) {

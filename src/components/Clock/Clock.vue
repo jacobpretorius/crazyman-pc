@@ -13,8 +13,12 @@
     </div>
     <div class="break"></div>
 
-    <button :class="{ active : clockRunning }" @click="handleRunClick">RUN</button>
-    <button @click="handlePulse">PULSE</button>
+    <button 
+      :class="{ active : clockRunning }" 
+      @click="handleRunClick">RUN</button>
+    <button 
+      :disabled="controlLines.halt"
+      @click="handlePulse">PULSE</button>
   </div>
 </template>
 
@@ -31,6 +35,14 @@ export default {
   },
   computed: {
     ...mapState(['bus', 'clockHigh', 'controlLines']),
+  },
+  watch: {
+    controlLines: function() {
+      if (this.controlLines.halt) {
+        this.clockRunning = false;
+        this.clearRunningTimers();
+      }
+    },
   },
   methods: {
     ...mapMutations({

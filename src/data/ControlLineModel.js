@@ -19,7 +19,6 @@ const controlLineModel = {
   ramReadMemoryContentsFromBus: false,
 
   // ALU
-  aluEnabled: false,
   aluSubtractionEnabled: false, // false = addition mode
   aluWriteResultToBus: false, // write calc result to bus
 
