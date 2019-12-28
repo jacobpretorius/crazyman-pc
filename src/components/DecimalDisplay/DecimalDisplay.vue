@@ -2,12 +2,12 @@
   <div class="DecimalDisplay">
     <h1>Decimal Display</h1>
 
-    <input class="display" v-model="busAsDecimalValue">
+    <input v-model="busAsDecimalValue" class="display" >
   </div>
 </template>
 
 <script>
-import { mapState, } from 'vuex';
+import { mapState } from 'vuex';
 import { boolArrayToBase10 } from '../../utils/BusConversions.js';
 
 export default {

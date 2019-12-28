@@ -1,6 +1,6 @@
 <template>
   <div class="cpu-container">
-    <p>One day this may be a full 8-bit CPU.</p>
+    <p>One day this may be a full 8-bit PC.</p>
 
     <div class="flexer">
       <BusOutput class="bus-output" />

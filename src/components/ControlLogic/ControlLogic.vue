@@ -101,7 +101,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 import { boolArrayToBase10, base10ToBoolArray } from '@/utils/BusConversions.js';
-import resetControlLineModel from '@/data/ControlLineModel.js';
+// import resetControlLineModel from '@/data/ControlLineModel.js';
 
 export default {
   name: 'ControlLogic',
@@ -136,7 +136,7 @@ export default {
           this.stepRunner();
         }else {
           // Clock low
-          //this.stepRunner();
+          // this.stepRunner();
         }
       }
     },
@@ -178,7 +178,7 @@ export default {
       console.log(activeStep);
 
       // Reset our control lines to initial state
-      //this.resetControlLines(Object.assign({}, resetControlLineModel));
+      // this.resetControlLines(Object.assign({}, resetControlLineModel));
 
       // Step 0 and 1 are always from FETCH
       if (activeStep === 0) {
@@ -206,7 +206,7 @@ export default {
       }
 
       // Test with LDA 
-      //console.log(this.programRegister.slice(4, this.programRegister.length));
+      // console.log(this.programRegister.slice(4, this.programRegister.length));
       if (this.getVerb() === 'LDA') {
         if (activeStep === 2) {
           this.setControlLine({
