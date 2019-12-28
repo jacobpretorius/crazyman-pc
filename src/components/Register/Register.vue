@@ -39,12 +39,6 @@ export default {
       default: '',
     },
   },
-  data: function() {
-    return {
-      readEnabledLED: false,
-      writeEnabledLED: false,
-    };
-  },
   computed: {
     ...mapState(['bus', 'clockHigh', 'registers', 'controlLines']),
     register: function() {
@@ -52,6 +46,12 @@ export default {
     },
     displayRegister() {
       return [...this.register].reverse();
+    },
+    readEnabledLED() {
+      return this.registerName === 'A' ? this.controlLines.regAReadContentsFromBus : this.controlLines.regBReadContentsFromBus;
+    },
+    writeEnabledLED() {
+      return this.registerName === 'A' ? this.controlLines.regAWriteToBus : this.controlLines.regBWriteToBus;
     },
   },
   watch: {
@@ -83,30 +83,16 @@ export default {
       fullSetBus: 'FULL_SET_BUS',
     }),
     loadRegisterFromBus() {
-      this.blinkReadEnabledLed();
       this.setRegister({
         registerName: this.registerName,
         value: [...this.bus],
       });
     },
     writeRegisterToBus() {
-      this.blinkWriteEnabledLed();
       this.fullSetBus(this.register);
     },
     handleClearRegister() {
       this.resetRegister(this.registerName);
-    },
-    blinkReadEnabledLed() {
-      this.readEnabledLED = true;
-      window.setTimeout(() => {
-        this.readEnabledLED = false;
-      }, 350);
-    },
-    blinkWriteEnabledLed() {
-      this.writeEnabledLED = true;
-      window.setTimeout(() => {
-        this.writeEnabledLED = false;
-      }, 350);
     },
   },
 };
