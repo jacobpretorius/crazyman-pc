@@ -3,10 +3,10 @@
     <p>One day this may be a full 8-bit PC.</p>
 
     <div class="flexer">
+      <DecimalDisplay class="decimal-display"/>
       <BusOutput class="bus-output" />
       <ProgramCounter class="program-counter" />
       <Clock class="clock" />
-      <DecimalDisplay class="decimal-display"/>
 
       <Register class="register" register-name="A" />
       <Register class="register" register-name="B" />
