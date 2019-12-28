@@ -3,7 +3,7 @@
     <h1>ALU</h1>
 
     <div class="led" 
-      :class="{ redled : writeAluResultToBusLED }"
+      :class="{ redled : controlLines.aluWriteResultToBus }"
       title="Write results to BUS">
       <span>w</span>
     </div>
@@ -19,7 +19,7 @@
     </div>
     <div class="break"></div>
 
-    <button :class="{ active : controlLines.aluWriteResultToBus }" @click="writeResultToBus">WRITE</button>
+    <button @click="writeResultToBus">WRITE</button>
     <button :class="{ active : controlLines.aluSubtractionEnabled }" @click="handleSubtractEnable">MIN</button>
   </div>
 </template>
@@ -37,11 +37,6 @@ export default {
         return []
       },
     },
-  },
-  data: function() {
-    return {
-      writeAluResultToBusLED: false,
-    };
   },
   computed: {
     ...mapState(['bus', 'registers', 'controlLines']),
