@@ -23,8 +23,8 @@ export default {
 
 <style scoped lang="scss">
 .DecimalDisplay {
-  min-width: 100px;
-  width: 10%;
+  min-width: 120px;
+  width: 12%;
 
   .display {
     color: white;

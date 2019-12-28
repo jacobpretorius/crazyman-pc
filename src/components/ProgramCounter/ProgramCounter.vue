@@ -98,7 +98,7 @@ export default {
 
 <style scoped lang="scss">
 .ProgramCounter {
-  min-width: 133px;
+  min-width: 150px;
   width: 15%;
 }
 </style>

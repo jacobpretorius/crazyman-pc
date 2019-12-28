@@ -2,7 +2,7 @@
   <div class="ControlLogic">
     <h1>Control Logic</h1>
 
-    <h2>Instruction Register</h2>
+    <h2>Instruction Register - {{ this.activeVerb }}</h2>
     <div class="input-area">
       <input
         v-for="(instructionLine, index) in programRegisterDisplay"
@@ -116,6 +116,9 @@ export default {
     programStepDisplay() {
       return [...this.programStep].reverse();
     },
+    activeVerb() {
+      return getVerb(this.programRegister);
+    },
   },
   watch: {
     bus: function () {
@@ -195,7 +198,7 @@ export default {
       // MAIN PC LOGIC HERE for steps 2, 3 & 4 to VERB operations
 
       // LDA
-      if (getVerb(this.programRegister) === 'LDA') {
+      if (this.activeVerb === 'LDA') {
         if (activeStep === 2) {
           this.setControlLineHigh('clWriteInstructionRegisterToBus');
           this.setControlLineHigh('ramMemoryAddressRegisterReadFromBus');
@@ -203,12 +206,15 @@ export default {
 
         if (activeStep === 3) {
           this.setControlLineHigh('ramWriteMemoryContentsToBus');
+        }
+
+        if (activeStep === 4) {
           this.setControlLineHigh('regAReadContentsFromBus');
         }
       }
 
       // LDB
-      if (getVerb(this.programRegister) === 'LDB') {
+      if (this.activeVerb === 'LDB') {
         if (activeStep === 2) {
           this.setControlLineHigh('clWriteInstructionRegisterToBus');
           this.setControlLineHigh('ramMemoryAddressRegisterReadFromBus');
@@ -224,7 +230,7 @@ export default {
       }
 
       // ADD
-      if (getVerb(this.programRegister) === 'ADD') {
+      if (this.activeVerb === 'ADD') {
         if (activeStep === 2) {
           this.setControlLineHigh('aluWriteResultToBus');
         }
@@ -235,7 +241,7 @@ export default {
       }
 
       // OUT
-      if (getVerb(this.programRegister) === 'OUT') {
+      if (this.activeVerb === 'OUT') {
         if (activeStep === 4) {
           console.log(' ----------- OUT ----------- ');
           console.log(boolArrayToBase10(this.registers['A']));
@@ -244,7 +250,7 @@ export default {
       }
 
       // HLT
-      if (getVerb(this.programRegister) === 'HLT') {
+      if (this.activeVerb === 'HLT') {
         this.setControlLineHigh('halt');
         if (activeStep === 2) {
           console.log(' ----------- HALT CALLED ----------- ');

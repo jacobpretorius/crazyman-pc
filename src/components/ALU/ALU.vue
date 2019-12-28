@@ -97,7 +97,7 @@ export default {
 
 <style scoped lang="scss">
 .ALU {
-  min-width: 145px;
+  min-width: 120px;
   width: 20%;
 
   h1 {
