@@ -48,10 +48,10 @@ export default {
 <style scoped lang="scss">
 .BusOutput {
   height: 100%;
-  width: $block-width;
+  width: 20%;
   min-width: $min-block-width;
 
-  @media screen and (max-width: max-mobile-size) {
+  @media screen and (max-width: 727px) {
     width: $block-width-mobile;
   }
 }

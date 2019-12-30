@@ -63,7 +63,7 @@ export default {
     justify-content: space-between;
 
     @media screen and (max-width: 727px) {
-      height: 100%
+      height: 100%;
     }
 
     > * {
