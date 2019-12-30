@@ -242,6 +242,14 @@ export default {
 
       // OUT
       if (this.activeVerb === 'OUT') {
+        if (activeStep === 2) {
+          this.setControlLineHigh('regAWriteToBus');
+        }
+        
+        if (activeStep === 3) {
+          this.setControlLineHigh('doUpdateFromBus');
+        }
+
         if (activeStep === 4) {
           console.log(' ----------- OUT ----------- ');
           console.log(boolArrayToBase10(this.registers['A']));

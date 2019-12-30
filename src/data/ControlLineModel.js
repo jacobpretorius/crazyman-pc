@@ -25,6 +25,9 @@ const controlLineModel = {
   // CONTROL LOGIC
   clReadInstructionRegisterFromBus: false,
   clWriteInstructionRegisterToBus: false,
+
+  // DECIMAL OUTPUT
+  doUpdateFromBus: false, // Read DO from bus
 };
 
 export default controlLineModel;

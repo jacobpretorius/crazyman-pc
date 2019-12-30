@@ -1,6 +1,10 @@
 <template>
   <div class="DecimalDisplay">
     <h1>Decimal Display</h1>
+
+    <div class="led" :class="{ blueled : controlLines.doUpdateFromBus }">
+      <span>w</span>
+    </div>
     <div class="break"></div>
 
     <input v-model="busAsDecimalValue" class="display" >
@@ -13,10 +17,22 @@ import { boolArrayToBase10 } from '../../utils/BusConversions.js';
 
 export default {
   name: 'DecimalDisplay',
+  data: function() {
+    return {
+      outputRegister: [false, false, false, false, false, false, false, false],
+    };
+  },
   computed: {
-    ...mapState(['bus']),
+    ...mapState(['bus', 'controlLines']),
     busAsDecimalValue() {
-      return boolArrayToBase10([...this.bus]) ;
+      return boolArrayToBase10([...this.outputRegister]) ;
+    },
+  },
+  watch: {
+    controlLines: function () {
+      if (this.controlLines.doUpdateFromBus) {
+        this.outputRegister = [...this.bus];
+      }
     },
   },
 };
