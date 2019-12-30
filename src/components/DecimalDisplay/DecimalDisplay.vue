@@ -1,5 +1,5 @@
 <template>
-  <div class="DecimalDisplay">
+  <div class="decimal-display">
     <h1>Decimal Display</h1>
 
     <div class="led" :class="{ blueled : controlLines.doUpdateFromBus }">
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.DecimalDisplay {
+.decimal-display {
   width: $block-width;
   min-width: $min-block-width;
 

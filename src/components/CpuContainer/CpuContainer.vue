@@ -15,6 +15,8 @@
       <ALU class="alu" :registerNames="['A','B']" />
       <Register class="register" register-name="B" />
       <DecimalDisplay class="decimal-display"/>
+
+      <Power class="power"/>
     </div>
   </div>
 </template>
@@ -30,6 +32,7 @@ import ProgramCounter from '../ProgramCounter/ProgramCounter.vue';
 import RAM from '../RAM/RAM.vue';
 import ControlLogic from '../ControlLogic/ControlLogic.vue';
 import DecimalDisplay from '../DecimalDisplay/DecimalDisplay.vue';
+import Power from '../Power/Power.vue';
 
 export default {
   name: 'CpuContainer',
@@ -42,6 +45,7 @@ export default {
     RAM,
     ControlLogic,
     DecimalDisplay,
+    Power,
   },
   computed: mapState({
     items: state => state,

@@ -1,5 +1,5 @@
 <template>
-  <div class="ProgramCounter">
+  <div class="program-counter">
     <h1>Program Counter</h1>
 
     <div class="led" :class="{ redled : controlLines.pcWriteCounterToBus }">
@@ -69,6 +69,11 @@ export default {
       }
     },
     controlLines: function() { 
+      if (this.controlLines.pcReset) {
+        console.log('hi mom');
+        this.programCounterValue = [false, false, false, false];
+      }
+
       if (this.controlLines.pcWriteCounterToBus) {
         this.writePCToBus();
       }
@@ -110,7 +115,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.ProgramCounter {
+.program-counter {
   width: $block-width;
   min-width: $min-block-width;
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="RAM">
+  <div class="ram">
     <h1>RAM</h1>
     <div class="led" 
       :class="{ redled : controlLines.writeMemoryContentsToBus }"
@@ -169,7 +169,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.RAM {
+.ram {
   width: $block-width;
   min-width: $min-block-width;
 

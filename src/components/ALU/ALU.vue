@@ -1,5 +1,5 @@
 <template>
-  <div class="ALU">
+  <div class="alu">
     <h1>ALU</h1>
 
     <div class="led" 
@@ -91,7 +91,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.ALU {
+.alu {
   width: $block-width;
   min-width: $min-block-width;
 

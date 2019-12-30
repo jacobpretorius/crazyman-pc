@@ -1,5 +1,5 @@
 <template>
-  <div class="Register">
+  <div class="register">
     <h1>Register {{ registerName }}</h1>
 
     <div class="led" :class="{ redlead : this.writeEnabledLED }">
@@ -99,7 +99,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.Register {
+.register {
   width: $block-width;
   min-width: $min-block-width;
 

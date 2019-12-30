@@ -1,5 +1,5 @@
 <template>
-  <div class="Clock">
+  <div class="clock">
     <h1>Clock</h1>
 
     <div class="led" 
@@ -19,6 +19,7 @@
     <button 
       :disabled="controlLines.halt"
       @click="handlePulse">PULSE</button>
+
   </div>
 </template>
 
@@ -39,6 +40,11 @@ export default {
   watch: {
     controlLines: function() {
       if (this.controlLines.halt) {
+        this.clockRunning = false;
+        this.clearRunningTimers();
+      }
+
+      if (this.controlLines.pcReset) {
         this.clockRunning = false;
         this.clearRunningTimers();
       }
@@ -84,7 +90,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.Clock {
+.clock {
   width: $block-width;
   min-width: $min-block-width;
 

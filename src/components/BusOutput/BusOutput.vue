@@ -1,5 +1,5 @@
 <template>
-  <div class="BusOutput">
+  <div class="bus-output">
     <h1>Bus Output</h1>
 
     <div class="input-area">
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.BusOutput {
+.bus-output {
   height: 100%;
   width: 20%;
   min-width: $min-block-width;

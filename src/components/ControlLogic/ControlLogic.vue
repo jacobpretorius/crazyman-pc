@@ -1,5 +1,5 @@
 <template>
-  <div class="ControlLogic">
+  <div class="control-logic">
     <h1>Control Logic</h1>
 
     <h2>Instruction Register - {{ this.activeVerb }}</h2>
@@ -286,7 +286,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .ControlLogic {
+  .control-logic {
     width: $block-width;
     min-width: $min-block-width;
 

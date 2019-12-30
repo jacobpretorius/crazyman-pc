@@ -2,6 +2,7 @@
 const controlLineModel = {
   // CLOCK
   halt: false, // Stop the clock
+  pcReset: false, // Clear everything
 
   // PROGRAM COUNTER
   pcEnabled: true, // Increment PC on CLOCKHI
