@@ -38,7 +38,7 @@
       </div>
 
       <div class="led led--w" 
-        :class="{ redled : controlLines.programCounterEnabled }"
+        :class="{ redled : controlLines.pcEnabled }"
         title="PC Enabled">
         <span>pce</span>
       </div>
@@ -105,7 +105,7 @@ export default {
     return {
       programRegister: [false, false, false, false, false, false, false, false],
       programStep: [false, false, false],
-      enableProgramExecution: false,
+      enableProgramExecution: true,
     };
   },
   computed: {
@@ -237,6 +237,17 @@ export default {
 
         if (activeStep === 3) {
           this.setControlLineHigh('regAReadContentsFromBus');
+        }
+      }
+
+      // JMP
+      if (this.activeVerb === 'JMP') {
+        if (activeStep === 2) {
+          this.setControlLineHigh('clWriteInstructionRegisterToBus');
+        }
+
+        if (activeStep === 3) {
+          this.setControlLineHigh('pcReadFromBus');
         }
       }
 

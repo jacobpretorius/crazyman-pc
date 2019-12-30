@@ -19,6 +19,9 @@
 // ADD - Add the contents of register B to register A
 // 0010
 
+// JMP - set PC to execute the next memloc
+// 0110
+
 // OUT - Print the contents of register A to the console
 // 1110
 

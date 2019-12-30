@@ -20,7 +20,7 @@
     </div>
 
     <button
-      :class="{ active : controlLines.programCounterEnabled }"
+      :class="{ active : controlLines.pcEnabled }"
       @click="handleActiveClick"
     >ENABLE</button>
     <button @click="writePCToBus">WRITE</button>
@@ -47,7 +47,7 @@ export default {
   watch: {
     clockHigh: function() {
       if (this.clockHigh) {
-        if (this.controlLines.programCounterEnabled) {
+        if (this.controlLines.pcEnabled) {
           let busAsBase10 = boolArrayToBase10(this.programCounterValue);
 
           // I know, I know. This is dirty. I'll get round to changing it sometime.
@@ -72,6 +72,19 @@ export default {
       if (this.controlLines.pcWriteCounterToBus) {
         this.writePCToBus();
       }
+
+      if (this.controlLines.pcReadFromBus) {
+        this.programCounterValue = this.bus.slice(0, this.programCounterValue.length);
+
+        // Handle incr on next clock high
+        let busAsBase10 = boolArrayToBase10(this.programCounterValue);
+        busAsBase10 = busAsBase10 - 1;
+
+        this.programCounterValue = base10ToBoolArray(
+          busAsBase10,
+          this.programCounterValue.length,
+        );
+      }
     },
   },
   methods: {
@@ -81,8 +94,8 @@ export default {
     }),
     handleActiveClick() {
       this.setControlLine({
-        line: 'programCounterEnabled',
-        value: !this.controlLines.programCounterEnabled,
+        line: 'pcEnabled',
+        value: !this.controlLines.pcEnabled,
       });
     },
     writePCToBus() {

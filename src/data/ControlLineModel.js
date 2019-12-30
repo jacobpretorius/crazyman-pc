@@ -4,8 +4,9 @@ const controlLineModel = {
   halt: false, // Stop the clock
 
   // PROGRAM COUNTER
-  programCounterEnabled: true, // Increment PC on CLOCKHI
+  pcEnabled: true, // Increment PC on CLOCKHI
   pcWriteCounterToBus: false, // Write PC to bus
+  pcReadFromBus: false, // Used to JUMP
 
   // REGISTERS
   regAWriteToBus: false,

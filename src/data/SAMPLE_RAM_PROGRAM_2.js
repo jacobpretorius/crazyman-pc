@@ -19,6 +19,9 @@
 // ADD - Add the contents of register B to register A
 // 0010
 
+// JMP - set PC to execute the next memloc
+// 0110
+
 // OUT - Print the contents of register A to the console
 // 1110
 
@@ -33,22 +36,26 @@ const SAMPLE_RAM_PROGRAM_2 = [
   // 1- LDB 15
   [false, false, true, true, true, true, true, true],
 
-  // 2-13 ADD
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
-  [false, false, true, false, false, false, false, false],
+  // 2- ADD
   [false, false, true, false, false, false, false, false],
 
-  // 14- OUT
+  // 3- OUT
   [true, true, true, false, false, false, false, false],
+
+  // 4- JMP loc2
+  [false, true, true, false, false, false, true, false],
+
+  // 5-14 NOOP
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false],
 
   // 15- Binary value 8
   [false, false, false, false, true, false, false, false],
