@@ -69,7 +69,7 @@ export default {
       this.sendHighLowClockPulse();
       var timer = window.setInterval(() => {
         this.sendHighLowClockPulse();
-      }, 1000);
+      }, 500);
 
       this.clockIntervals.push(timer);
     },
@@ -83,7 +83,7 @@ export default {
 
       window.setTimeout(() => {
         this.setClockState(false);
-      }, 500);
+      }, 250);
     },
   },
 };

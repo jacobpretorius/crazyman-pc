@@ -174,7 +174,7 @@ export default {
           clearInterval(repeater);
           this.programStep = [...this.programStep].fill(false);
         }
-      }, 90);
+      }, 50);
     },
     runStep() {
       // This gets called for each step of the exec
