@@ -92,8 +92,12 @@ export default {
 
 <style scoped lang="scss">
 .ALU {
-  min-width: 120px;
-  width: 20%;
+  width: $block-width;
+  min-width: $min-block-width;
+
+  @media screen and (max-width: max-mobile-size) {
+    width: $block-width-mobile;
+  }
 
   h1 {
     display: inline-block;

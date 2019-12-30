@@ -1,6 +1,7 @@
 <template>
   <div class="DecimalDisplay">
     <h1>Decimal Display</h1>
+    <div class="break"></div>
 
     <input v-model="busAsDecimalValue" class="display" >
   </div>
@@ -23,8 +24,12 @@ export default {
 
 <style scoped lang="scss">
 .DecimalDisplay {
-  min-width: 120px;
-  width: 12%;
+  width: $block-width;
+  min-width: $min-block-width;
+
+  @media screen and (max-width: max-mobile-size) {
+    width: $block-width-mobile;
+  }
 
   .display {
     color: white;

@@ -85,7 +85,11 @@ export default {
 
 <style scoped lang="scss">
 .Clock {
-  min-width: 112px;
-  width: 10%;
+  width: $block-width;
+  min-width: $min-block-width;
+
+  @media screen and (max-width: max-mobile-size) {
+    width: $block-width-mobile;
+  }
 }
 </style>

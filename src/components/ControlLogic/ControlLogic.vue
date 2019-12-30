@@ -268,8 +268,12 @@ export default {
 
 <style scoped lang="scss">
   .ControlLogic {
-    min-width: 340px;
-    width: 35%;
+    width: $block-width;
+    min-width: $min-block-width;
+
+    @media screen and (max-width: max-mobile-size) {
+      width: $block-width-mobile;
+    }
 
     .input-area .step-line {
       color: $color-red;

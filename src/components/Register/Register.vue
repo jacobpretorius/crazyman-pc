@@ -100,7 +100,11 @@ export default {
 
 <style scoped lang="scss">
 .Register {
-  min-width: 206px;
-  width: 30%;
+  width: $block-width;
+  min-width: $min-block-width;
+
+  @media screen and (max-width: max-mobile-size) {
+    width: $block-width-mobile;
+  }
 }
 </style>

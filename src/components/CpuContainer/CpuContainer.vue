@@ -3,18 +3,18 @@
     <p>One day this may be a full 8-bit PC.</p>
 
     <div class="flexer">
-      <DecimalDisplay class="decimal-display"/>
-      <BusOutput class="bus-output" />
-      <ProgramCounter class="program-counter" />
       <Clock class="clock" />
-
-      <Register class="register" register-name="A" />
-      <Register class="register" register-name="B" />
-      <ALU class="alu" :registerNames="['A','B']" />
-
       <RAM />
       <ControlLogic />
 
+      <BusOutput class="bus-output" />
+
+      <ProgramCounter class="program-counter" />
+
+      <Register class="register" register-name="A" />
+      <ALU class="alu" :registerNames="['A','B']" />
+      <Register class="register" register-name="B" />
+      <DecimalDisplay class="decimal-display"/>
     </div>
   </div>
 </template>
@@ -53,9 +53,18 @@ export default {
 .cpu-container {
   .flexer {
     display: flex;
+    flex-direction: column;
     margin-top: 1rem;
     flex-wrap: wrap;
     width: 100%;
+    max-width: 930px;
+    height: 650px;
+    min-height: 650px;
+    justify-content: space-between;
+
+    @media screen and (max-width: 727px) {
+      height: 100%
+    }
 
     > * {
       padding: 5px;

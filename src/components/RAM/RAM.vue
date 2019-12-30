@@ -170,8 +170,12 @@ export default {
 
 <style scoped lang="scss">
 .RAM {
-  min-width: 163px;
-  width: 30%;
+  width: $block-width;
+  min-width: $min-block-width;
+
+  @media screen and (max-width: max-mobile-size) {
+    width: $block-width-mobile;
+  }
 
   .sample-prog {
     color: $color-red;
