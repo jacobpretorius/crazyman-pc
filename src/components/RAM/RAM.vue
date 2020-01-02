@@ -65,7 +65,7 @@ import SAMPLE_RAM_PROGRAM_2 from '@/data/SAMPLE_RAM_PROGRAM_2.js';
 
 export default {
   name: 'RAM',
-  data: function() {
+  data() {
     return {
       memoryAddressRegister: [false, false, false, false],
     };
@@ -154,13 +154,13 @@ export default {
     },
     handleLoadSampleProgram() {
       for (let i = 0; i < this.usableMemoryAddresses; i++) {
-        this.setMemoryLocation({ memoryAddress: i, value: SAMPLE_RAM_PROGRAM[i].reverse()});
+        this.setMemoryLocation({ memoryAddress: i, value: [...SAMPLE_RAM_PROGRAM[i]].reverse()});
       }
       console.log('Loaded sample program to RAM');
     },
     handleLoadSampleProgram2() {
       for (let i = 0; i < this.usableMemoryAddresses; i++) {
-        this.setMemoryLocation({ memoryAddress: i, value: SAMPLE_RAM_PROGRAM_2[i].reverse()});
+        this.setMemoryLocation({ memoryAddress: i, value: [...SAMPLE_RAM_PROGRAM_2[i]].reverse()});
       }
       console.log('Loaded sample program 2 to RAM');
     },

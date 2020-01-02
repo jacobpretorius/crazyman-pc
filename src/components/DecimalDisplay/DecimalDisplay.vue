@@ -17,7 +17,7 @@ import { boolArrayToBase10 } from '../../utils/BusConversions.js';
 
 export default {
   name: 'DecimalDisplay',
-  data: function() {
+  data() {
     return {
       outputRegister: [false, false, false, false, false, false, false, false],
     };

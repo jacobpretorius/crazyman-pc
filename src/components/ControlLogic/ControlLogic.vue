@@ -101,7 +101,7 @@ import { getVerb } from '@/utils/VerbHelper.js';
 
 export default {
   name: 'ControlLogic',
-  data: function() {
+  data() {
     return {
       programRegister: [false, false, false, false, false, false, false, false],
       programStep: [false, false, false],
@@ -119,6 +119,9 @@ export default {
     activeVerb() {
       return getVerb(this.programRegister);
     },
+    pcReset() {
+      return this.controlLines.pcReset;
+    },
   },
   watch: {
     bus: function () {
@@ -127,7 +130,7 @@ export default {
       }
 
       if (this.controlLines.clWriteInstructionRegisterToBus) {
-        this.writeControlRegisterToBus;
+        this.writeControlRegisterToBus();
       }
     },
     controlLines: function () {
@@ -136,8 +139,13 @@ export default {
       }
 
       if (this.controlLines.clWriteInstructionRegisterToBus) {
-        this.writeControlRegisterToBus;
+        this.writeControlRegisterToBus();
       }
+    },
+    pcReset: function(value) {
+      if (value === true) {
+        this.programRegister = [false, false, false, false, false, false, false, false];
+      } 
     },
     clockHigh: function() {
       if (this.enableProgramExecution && this.clockHigh) {

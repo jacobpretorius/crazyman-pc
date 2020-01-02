@@ -10,7 +10,6 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex';
-// import resetControlLineModel from '@/data/ControlLineModel.js';
 
 export default {
   name: 'Power',
@@ -20,22 +19,23 @@ export default {
   methods: {
     ...mapMutations({
       resetBus: 'RESET_BUS',
-      reserRegister: 'RESET_REGISTER',
+      resetRegister: 'RESET_REGISTER',
       setMemoryLocation: 'SET_MEMORY_LOCATION',
+      setControlLineLow: 'SET_CONTROL_LINE_LOW',
       setControlLineHigh: 'SET_CONTROL_LINE_HIGH',
       resetControlLines: 'RESET_CONTROL_LINES',
     }),
     handlePcReset() {
-      // this.setControlLineHigh('pcReset');
+      this.setControlLineLow('halt');
+      this.setControlLineHigh('pcReset');
+
       this.resetBus();
-      this.reserRegister('A');
-      this.reserRegister('B');
+      this.resetRegister('A');
+      this.resetRegister('B');
 
       for (let i = 0; i < Object.keys(this.memory).length; i++) {
         this.setMemoryLocation({ memoryAddress: i, value: [false, false, false, false, false, false, false, false]});
       }
-
-      // this.resetControlLines(Object.assign({}, resetControlLineModel));
     },
   },
 };

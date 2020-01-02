@@ -33,7 +33,7 @@ import { boolArrayToBase10, base10ToBoolArray } from '../../utils/BusConversions
 
 export default {
   name: 'ProgramCounter',
-  data: function() {
+  data() {
     return {
       programCounterValue: [false, false, false, false], // 4 bit PC
     };
@@ -43,24 +43,25 @@ export default {
     displayProgramCounter() {
       return [...this.programCounterValue].reverse();
     },
+    pcReset() {
+      return this.controlLines.pcReset;
+    },
   },
   watch: {
     clockHigh: function() {
-      if (this.clockHigh) {
-        if (this.controlLines.pcEnabled) {
-          let busAsBase10 = boolArrayToBase10(this.programCounterValue);
+      if (this.clockHigh && this.controlLines.pcEnabled) {
+        let busAsBase10 = boolArrayToBase10(this.programCounterValue);
 
-          // I know, I know. This is dirty. I'll get round to changing it sometime.
-          // These operations being bitwise are less important to me than having the Ben Eater CPU running. MVP.
+        // I know, I know. This is dirty. I'll get round to changing it sometime.
+        // These operations being bitwise are less important to me than having the Ben Eater CPU running. MVP.
 
-          // Add 1 to converted bus
-          busAsBase10 = busAsBase10 + 1;
+        // Add 1 to converted bus
+        busAsBase10 = busAsBase10 + 1;
 
-          this.programCounterValue = base10ToBoolArray(
-            busAsBase10,
-            this.programCounterValue.length,
-          );
-        }
+        this.programCounterValue = base10ToBoolArray(
+          busAsBase10,
+          this.programCounterValue.length,
+        );
       }
     },
     programCounterValue: function() {
@@ -68,12 +69,12 @@ export default {
         this.writePCToBus();
       }
     },
-    controlLines: function() { 
-      if (this.controlLines.pcReset) {
-        console.log('hi mom');
+    pcReset: function(value) {
+      if (value === true) {
         this.programCounterValue = [false, false, false, false];
-      }
-
+      } 
+    },
+    controlLines: function() { 
       if (this.controlLines.pcWriteCounterToBus) {
         this.writePCToBus();
       }

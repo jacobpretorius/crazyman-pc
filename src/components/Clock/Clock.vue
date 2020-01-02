@@ -28,7 +28,7 @@ import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'Clock',
-  data: function() {
+  data() {
     return {
       clockIntervals: [],
       clockRunning: false,
@@ -36,15 +36,19 @@ export default {
   },
   computed: {
     ...mapState(['bus', 'clockHigh', 'controlLines']),
+    pcReset() {
+      return this.controlLines.pcReset;
+    },
   },
   watch: {
-    controlLines: function() {
-      if (this.controlLines.halt) {
+    pcReset: function(value) {
+      if (value === true) {
         this.clockRunning = false;
         this.clearRunningTimers();
-      }
-
-      if (this.controlLines.pcReset) {
+      } 
+    },
+    controlLines: function() {
+      if (this.controlLines.halt) {
         this.clockRunning = false;
         this.clearRunningTimers();
       }
@@ -53,6 +57,7 @@ export default {
   methods: {
     ...mapMutations({
       setClockState: 'SET_CLOCK_STATE',
+      setControlLineLow: 'SET_CONTROL_LINE_LOW',
     }),
     handlePulse() {
       this.sendHighLowClockPulse();
@@ -60,6 +65,7 @@ export default {
     handleRunClick() {
       this.clockRunning = !this.clockRunning;
       if (this.clockRunning) {
+        this.setControlLineLow('halt');
         this.startClockPulse();
       } else {
         this.clearRunningTimers();

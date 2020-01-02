@@ -53,6 +53,9 @@ export default new Vuex.Store({
     UPDATE_CONTROL_LINES: (state, payload) => {
       Vue.set(state.controlLines, payload.line, payload.value);
     },
+    SET_CONTROL_LINE_LOW: (state, line) => {
+      Vue.set(state.controlLines, line, false);
+    },
     SET_CONTROL_LINE_HIGH: (state, line) => {
       Vue.set(state.controlLines, line, true);
     },
