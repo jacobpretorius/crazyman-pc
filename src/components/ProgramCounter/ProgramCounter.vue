@@ -67,6 +67,7 @@ export default {
     programCounterValue: function() {
       if (this.controlLines.pcWriteCounterToBus) {
         this.writePCToBus();
+        this.writeClonePC();
       }
     },
     pcReset: function(value) {
@@ -97,6 +98,7 @@ export default {
     ...mapMutations({
       fullSetBus: 'FULL_SET_BUS',
       setControlLine: 'UPDATE_CONTROL_LINES',
+      setClonePC: 'SET_CLONE_PC',
     }),
     handleActiveClick() {
       this.setControlLine({
@@ -110,6 +112,9 @@ export default {
         tempBus[i] = this.programCounterValue[i]
       }
       this.fullSetBus(tempBus);
+    },
+    writeClonePC() {
+      this.setClonePC(boolArrayToBase10(this.programCounterValue));
     },
   },
 };

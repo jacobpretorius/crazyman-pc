@@ -24,11 +24,13 @@ export default {
       setControlLineLow: 'SET_CONTROL_LINE_LOW',
       setControlLineHigh: 'SET_CONTROL_LINE_HIGH',
       resetControlLines: 'RESET_CONTROL_LINES',
+      setClonePC: 'SET_CLONE_PC',
     }),
     handlePcReset() {
       this.setControlLineLow('halt');
       this.setControlLineHigh('pcReset');
 
+      this.setClonePC(0);
       this.resetBus();
       this.resetRegister('A');
       this.resetRegister('B');

@@ -11,6 +11,7 @@ export default new Vuex.Store({
     clockHigh: false,
     controlLines: controlLineModel,
     memory: {},
+    pcClone: 0, // Used ONLY for the info panel / educational purposes. computer relies on PC from bus
   },
   mutations: {
     // BUS
@@ -61,6 +62,11 @@ export default new Vuex.Store({
     },
     RESET_CONTROL_LINES: (state, payload) => {
       Vue.set(state, 'controlLines', payload);
+    },
+
+    // PC CLONE FOR EDUCATIONAL PURPOSES
+    SET_CLONE_PC: (state, payload) => {
+      Vue.set(state, 'pcClone', payload);
     },
   },
 });

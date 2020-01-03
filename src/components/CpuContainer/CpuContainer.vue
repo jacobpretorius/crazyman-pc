@@ -2,21 +2,24 @@
   <div class="cpu-container">
     <p>One day this may be a full 8-bit PC.</p>
 
-    <div class="flexer">
-      <Clock class="clock" />
-      <RAM />
-      <ControlLogic />
+    <div class="main-panel">
+      <div class="pc-components">
+        <Clock />
+        <RAM />
+        <ControlLogic />
 
-      <BusOutput class="bus-output" />
+        <BusOutput />
 
-      <ProgramCounter class="program-counter" />
-
-      <Register class="register" register-name="A" />
-      <ALU class="alu" :registerNames="['A','B']" />
-      <Register class="register" register-name="B" />
-      <DecimalDisplay class="decimal-display"/>
-
-      <Power class="power"/>
+        <ProgramCounter />
+        <Register register-name="A" />
+        <ALU :registerNames="['A','B']" />
+        <Register register-name="B" />
+        <DecimalDisplay />
+        <Power />
+      </div>
+      <div class="info-section">
+        <InfoPanel />
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +36,7 @@ import RAM from '../RAM/RAM.vue';
 import ControlLogic from '../ControlLogic/ControlLogic.vue';
 import DecimalDisplay from '../DecimalDisplay/DecimalDisplay.vue';
 import Power from '../Power/Power.vue';
+import InfoPanel from '../InfoPanel/InfoPanel.vue';
 
 export default {
   name: 'CpuContainer',
@@ -46,6 +50,7 @@ export default {
     ControlLogic,
     DecimalDisplay,
     Power,
+    InfoPanel,
   },
   computed: mapState({
     items: state => state,
@@ -54,13 +59,32 @@ export default {
 </script>
 
 <style lang="scss">
-.cpu-container {
-  .flexer {
+.main-panel {
+  display: flex;
+
+  .info-section {
+    justify-content: flex-end;
+    width: 25%;
+    min-height: 650px;
+    margin-top: 1rem;
+
+    > * {
+      padding: 5px;
+      margin: 0 5px 5px 0;
+      border: 2px solid $color-eucalyptus;
+    }
+
+    h1 {
+      display: inline-block;
+    }
+  }
+
+  .pc-components {
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
     flex-wrap: wrap;
-    width: 100%;
+    width: 80%;
     max-width: 930px;
     height: 650px;
     min-height: 650px;
