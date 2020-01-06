@@ -37,4 +37,29 @@ function getVerb(programRegister) {
   return 'NOP';
 }
 
-export { getVerb };
+function verbToBinaryBitArray(verb) {
+  switch(verb) {
+    case 'LDA':
+      return [false, false, false, true];
+
+    case 'LDB':
+      return [false, false, true, true];
+
+    case 'ADD':
+      return [false, false, true, false];
+
+    case 'JMP':
+      return [false, true, true, false];
+
+    case 'OUT':
+      return [true, true, true, false];
+
+    case 'HLT':
+      return [true, true, true, true];
+
+    default:
+      return [false, false, false, false];
+  }
+}
+
+export { getVerb, verbToBinaryBitArray };
