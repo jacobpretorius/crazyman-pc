@@ -2,24 +2,21 @@
   <div class="cpu-container">
     <p>One day this may be a full 8-bit PC.</p>
 
-    <div class="main-panel">
-      <div class="pc-components">
-        <Clock />
-        <RAM />
-        <ControlLogic />
+    <div class="pc-components">
+      <Clock />
+      <RAM />
+      <ControlLogic />
 
-        <BusOutput />
+      <BusOutput />
 
-        <ProgramCounter />
-        <Register register-name="A" />
-        <ALU :registerNames="['A','B']" />
-        <Register register-name="B" />
-        <DecimalDisplay />
-        <Power />
-      </div>
-      <div class="info-section">
-        <InfoPanel />
-      </div>
+      <ProgramCounter />
+      <Register register-name="A" />
+      <ALU :registerNames="['A','B']" />
+      <Register register-name="B" />
+      <DecimalDisplay />
+      <Power />
+
+      <InfoPanel />
     </div>
   </div>
 </template>
@@ -59,32 +56,13 @@ export default {
 </script>
 
 <style lang="scss">
-.main-panel {
-  display: flex;
-
-  .info-section {
-    justify-content: flex-end;
-    width: 25%;
-    min-height: 650px;
-    margin-top: 1rem;
-
-    > * {
-      padding: 5px;
-      margin: 0 5px 5px 0;
-      border: 2px solid $color-eucalyptus;
-    }
-
-    h1 {
-      display: inline-block;
-    }
-  }
-
+.cpu-container {
   .pc-components {
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
     flex-wrap: wrap;
-    width: 80%;
+    width: 100%;
     max-width: 930px;
     height: 650px;
     min-height: 650px;

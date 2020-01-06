@@ -69,7 +69,7 @@ export default {
 <style scoped lang="scss">
 .info-panel {
   height: 100%;
-  min-width: $min-block-width;
+  min-width: 300px;
 
   @media screen and (max-width: 727px) {
     width: $block-width-mobile;
@@ -78,7 +78,7 @@ export default {
   .bytecode-display {
     resize: none;
     width: 100%;
-    height: 50%;
+    padding-left: 5px;
     background-color: $color-gunmetal;
     color: $color-white-smoke;
   }
