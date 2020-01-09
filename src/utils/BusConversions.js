@@ -1,6 +1,7 @@
 function boolArrayToBase10(array) {
   // Safely get the full bus values
   let str = '';
+  // Incoming array for base10 value '1' is base2 '100' instead of '001' so we reverse it first
   let flipped = [...array].reverse();
   for (let i = 0; i < flipped.length; i++) {
     if (flipped[i]) {

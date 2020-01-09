@@ -3,11 +3,15 @@
     <h1>Info</h1>
 
     <h2>Machine code in RAM</h2>
-    <pre contentEditable="false" class="bytecode-display" v-html="displayMachineCode">
-    </pre>
+    <pre contentEditable="false" class="bytecode-display" v-html="displayMachineCode"></pre>
 
     <h2>Code</h2>
-    <textarea v-model="userProgram" class="code-input" placeholder="Write some assembly ;)" rows="10"></textarea>
+    <div class="scroll">
+      <div class="code-editor">
+        <pre contentEditable="false" class="line-display" v-html="displayCodeLineNumbers"></pre>
+        <textarea v-model="userProgram" class="code-input" placeholder="Write some assembly ;)"></textarea>
+      </div>
+    </div>
 
     <div class="footer">
       <button @click="handleCompile">COMPILE</button>
@@ -38,6 +42,23 @@ export default {
         }
       }
       return false;
+    },
+    displayCodeLineLength() {
+      return this.userProgram.split('\n').length;
+    },
+    displayCodeLineNumbers() {
+      let resultStr = '';
+      for (let i = 0; i < this.displayCodeLineLength; i++) {
+        // Highlight the active PC line
+        if (this.infoPanelObject.pcClone === i)
+          resultStr += '<span style="background-color: #429063;">';
+
+        resultStr += `${i}\n`;
+
+        if (this.infoPanelObject.pcClone === i)
+          resultStr += '</span>';
+      }
+      return resultStr;
     },
     displayMachineCode() {
       if (this.memoryIsPopulated) {
@@ -137,21 +158,38 @@ export default {
     color: $color-white-smoke;
   }
 
-  .code-input {
-    resize: vertical;
-    padding: 0 5px;
-    width: stretch;
-    background-color: $color-gunmetal;
-    color: $color-white-smoke;
-  }
+  .scroll {
+    height: 195px;
+    max-height: 195px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    
+    .code-editor {
+      display: flex;
 
-  .code-input::placeholder {
-    color: $color-white-smoke;
-    opacity: 0.8;
-  }
+      .line-display {
+        padding: 0px 5px 0 3px;
+        min-width: 5%;
+      }
 
-  .code-input:focus.code-input::placeholder {
-    opacity: 0;
+      .code-input {
+        resize: none;
+        padding: 0 5px;
+        min-width: 89%;
+        background-color: $color-gunmetal;
+        color: $color-white-smoke;
+        min-height: -webkit-fill-available;
+      }
+
+      .code-input::placeholder {
+        color: $color-white-smoke;
+        opacity: 0.8;
+      }
+
+      .code-input:focus.code-input::placeholder {
+        opacity: 0;
+      }
+    }
   }
 
   .footer {

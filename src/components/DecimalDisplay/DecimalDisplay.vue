@@ -25,7 +25,7 @@ export default {
   computed: {
     ...mapState(['bus', 'controlLines']),
     busAsDecimalValue() {
-      return boolArrayToBase10([...this.outputRegister]) ;
+      return boolArrayToBase10(this.outputRegister) ;
     },
   },
   watch: {

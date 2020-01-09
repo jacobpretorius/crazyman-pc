@@ -28,7 +28,7 @@
 // HLT - Stops the CPU
 // 1111
 
-// FYI: These values are standard binary format, not display flipped
+// FYI: These values are display flipped
 const SAMPLE_RAM_PROGRAM = [
   // 0- NOOP INIT
   [false, false, false, false, false, false, false, false],

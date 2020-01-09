@@ -153,12 +153,14 @@ export default {
       this.fullSetBus([...this.memory[currentMemoryLocation]]);
     },
     handleLoadSampleProgram() {
+      // Sample programs are written in display flipped format. We need to reverse before use.
       for (let i = 0; i < this.usableMemoryAddresses; i++) {
         this.setMemoryLocation({ memoryAddress: i, value: [...SAMPLE_RAM_PROGRAM[i]].reverse()});
       }
       console.log('Loaded sample program to RAM');
     },
     handleLoadSampleProgram2() {
+      // Sample programs are written in display flipped format. We need to reverse before use.
       for (let i = 0; i < this.usableMemoryAddresses; i++) {
         this.setMemoryLocation({ memoryAddress: i, value: [...SAMPLE_RAM_PROGRAM_2[i]].reverse()});
       }
