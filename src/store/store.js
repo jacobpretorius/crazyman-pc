@@ -11,17 +11,16 @@ export default new Vuex.Store({
     clockHigh: false,
     controlLines: controlLineModel,
     memory: {},
-    pcClone: 0, // Used ONLY for the info panel / educational purposes. computer relies on PC from bus
+
+    // Used ONLY for the info panel / educational purposes.
+    infoPanelObject: {
+      pcClone: 0, // Computer relies on PC set/read from bus like in a real pc.
+    },
   },
   mutations: {
     // BUS
     FULL_SET_BUS: (state, payload) => {
       Vue.set(state, 'bus', payload.slice());
-    },
-    UPDATE_BUS: (state, payload) => {
-      let updatedBus = [...state.bus];
-      updatedBus[payload.index] = parseInt(payload.value);
-      Vue.set(state, 'bus', updatedBus.slice());
     },
     RESET_BUS: (state) => {
       Vue.set(state, 'bus', [
@@ -66,7 +65,7 @@ export default new Vuex.Store({
 
     // PC CLONE FOR EDUCATIONAL PURPOSES
     SET_CLONE_PC: (state, payload) => {
-      Vue.set(state, 'pcClone', payload);
+      Vue.set(state.infoPanelObject, 'pcClone', payload);
     },
   },
 });

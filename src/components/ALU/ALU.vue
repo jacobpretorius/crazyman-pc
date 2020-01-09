@@ -34,15 +34,12 @@ export default {
     registerNames: {
       type: Array,
       default() {
-        return []
+        return [];
       },
     },
   },
   computed: {
     ...mapState(['bus', 'registers', 'controlLines']),
-    registersValid() {
-      return this.registers[this.registerNames[0]].length & this.registers[this.registerNames[1]].length;
-    },
   },
   watch: {
     controlLines: function() { 
@@ -63,21 +60,16 @@ export default {
       }
     },
     calculateOperation() {
-      if (this.registersValid) {
-        if (this.controlLines.aluSubtractionEnabled) {
-          return boolArraySubtraction(
-            this.registers[this.registerNames[0]],
-            this.registers[this.registerNames[1]],
-          );
-        } else {
-          return boolArrayAddition(
-            this.registers[this.registerNames[0]],
-            this.registers[this.registerNames[1]],
-          );
-        }
+      if (this.controlLines.aluSubtractionEnabled) {
+        return boolArraySubtraction(
+          this.registers[this.registerNames[0]],
+          this.registers[this.registerNames[1]],
+        );
       } else {
-        console.log('This CPU needs some registers.');
-        return;
+        return boolArrayAddition(
+          this.registers[this.registerNames[0]],
+          this.registers[this.registerNames[1]],
+        );
       }
     },
     handleSubtractEnable() {

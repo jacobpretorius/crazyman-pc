@@ -30,7 +30,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['memory', 'pcClone']),
+    ...mapState(['memory', 'infoPanelObject']),
     memoryIsPopulated() {
       for (let i = 0; i < Object.keys(this.memory).length; i++) {
         if (this.memory[i].some(x => x === true)){
@@ -46,7 +46,7 @@ export default {
         // Loop the Memory addresses
         for (let i = 0; i < Object.keys(this.memory).length; i++) {
           // Highlight the active PC line
-          if (this.pcClone === i)
+          if (this.infoPanelObject.pcClone === i)
             output += '<span style="background-color: #429063;">';
 
           output += `${i}  -> \t`;
@@ -60,7 +60,7 @@ export default {
           // Output VERB & binary 4 least significant bits
           output += `=> ${getVerb([...this.memory[i]])} ${boolArrayToBase10([...this.memory[i]].slice(0, 4))} | ${boolArrayToBase10([...this.memory[i]])}`;
 
-          if (this.pcClone === i)
+          if (this.infoPanelObject.pcClone === i)
             output += '</span>';
 
           output += '\n';

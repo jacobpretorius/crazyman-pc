@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     ...mapState(['bus', 'clockHigh', 'registers', 'controlLines']),
-    register: function() {
+    register() {
       return this.registers[this.registerName];
     },
     displayRegister() {
