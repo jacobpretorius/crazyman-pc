@@ -49,6 +49,12 @@
       </div>
 
       <div class="led led--w" 
+        :class="{ redled : controlLines.reg4BitMode }"
+        title="Registers in 4-bit mode">
+        <span>r4b</span>
+      </div>
+
+      <div class="led led--w" 
         :class="{ redled : controlLines.ramMemoryAddressRegisterReadFromBus }"
         title="Read RAM memory address register from BUS">
         <span>rmr</span>
@@ -73,6 +79,11 @@
         :class="{ redled : controlLines.aluWriteResultToBus }"
         title="ALU Write result to BUS">
         <span>alw</span>
+      </div>
+      <div class="led led--w" 
+        :class="{ redled : controlLines.aluSetFlagsRegisterOnResult }"
+        title="ALU set FlagsRegister on execution result">
+        <span>alf</span>
       </div>
 
       <div class="led led--w" 
