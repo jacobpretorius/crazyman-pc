@@ -8,7 +8,7 @@ const SAMPLE_RAM_PROGRAM_2 = [
   [false, false, false, false, false, false, false, false],
 
   // 1- LDB 15
-  [false, false, true, true, true, true, true, true],
+  [true, false, false, true, true, true, true, true],
 
   // 2- ADD
   [false, false, true, false, false, false, false, false],

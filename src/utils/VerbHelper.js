@@ -40,7 +40,7 @@ function getVerb(programRegister) {
       return 'JPZ';
 
     // 1001
-    case JSON.stringify([true, false, true, true]):
+    case JSON.stringify([true, false, false, true]):
       return 'LDB';
 
     // 1110
@@ -84,7 +84,7 @@ function verbToBinaryBitArray(verb) {
       return [true, false, false, false];
 
     case 'LDB':
-      return [true, false, true, true];
+      return [true, false, false, true];
 
     case 'OUT':
       return [true, true, true, false];
