@@ -2,6 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link>
+      <a class="nav-link" href="https://github.com/jacobpretorius/crazyman-cpu" target="_blank">Github</a>
     </div>
     <div class="body">
       <router-view />
@@ -15,11 +16,15 @@
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: #86bcf3;
 
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+
+  .nav-link{
+    margin-left: 1rem;
   }
 }
 </style>
