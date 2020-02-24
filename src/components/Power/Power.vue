@@ -20,6 +20,7 @@ export default {
     ...mapMutations({
       resetBus: 'RESET_BUS',
       resetRegister: 'RESET_REGISTER',
+      resetFlagsRegister: 'RESET_FLAGS_REGISTER',
       setMemoryLocation: 'SET_MEMORY_LOCATION',
       setControlLineLow: 'SET_CONTROL_LINE_LOW',
       setControlLineHigh: 'SET_CONTROL_LINE_HIGH',
@@ -34,6 +35,7 @@ export default {
       this.resetBus();
       this.resetRegister('A');
       this.resetRegister('B');
+      this.resetFlagsRegister();
 
       for (let i = 0; i < Object.keys(this.memory).length; i++) {
         this.setMemoryLocation({ memoryAddress: i, value: [false, false, false, false, false, false, false, false]});

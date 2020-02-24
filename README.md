@@ -8,6 +8,11 @@ Basically all the difficult PC simulation problems has been done for us and we n
 
 You can see it running here https://crazyman-cpu.netlify.com/
 
+## Verbs
+What can it do?
+
+See the [VERBS](/VERBS.md) document.
+
 ## Project setup
 ```
 npm install

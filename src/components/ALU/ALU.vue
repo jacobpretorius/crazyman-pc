@@ -17,6 +17,16 @@
       title="Subtraction mode">
       <span>-</span>
     </div>
+    <div class="led" 
+      :class="{ redled : flagsRegister[0] === true }"
+      title="ZERO flag set">
+      <span>Z</span>
+    </div>
+    <div class="led" 
+      :class="{ redled : flagsRegister[1] === true }"
+      title="OVERFLOW flag set">
+      <span>O</span>
+    </div>
     <div class="break"></div>
 
     <button @click="writeResultToBus">WRITE</button>
@@ -39,7 +49,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['bus', 'registers', 'controlLines']),
+    ...mapState(['bus', 'registers', 'controlLines', 'flagsRegister']),
   },
   watch: {
     controlLines: function() { 
@@ -52,6 +62,7 @@ export default {
     ...mapMutations({
       fullSetBus: 'FULL_SET_BUS',
       setControlLine: 'UPDATE_CONTROL_LINES',
+      setFlagsRegister: 'SET_FLAGS_REGISTER',
     }),
     writeResultToBus() {
       let result = this.calculateOperation();
@@ -60,17 +71,24 @@ export default {
       }
     },
     calculateOperation() {
+      let result;
       if (this.controlLines.aluSubtractionEnabled) {
-        return boolArraySubtraction(
+        result = boolArraySubtraction(
           this.registers[this.registerNames[0]],
           this.registers[this.registerNames[1]],
         );
       } else {
-        return boolArrayAddition(
+        result = boolArrayAddition(
           this.registers[this.registerNames[0]],
           this.registers[this.registerNames[1]],
         );
       }
+
+      if (this.controlLines.aluSetFlagsRegisterOnResult) {
+        this.setFlagsRegister([result.zero, result.overflow, false, false]);
+      }
+
+      return result.value;
     },
     handleSubtractEnable() {
       this.setControlLine({

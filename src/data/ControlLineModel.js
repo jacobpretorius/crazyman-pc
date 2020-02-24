@@ -14,6 +14,7 @@ const controlLineModel = {
   regAReadContentsFromBus: false,
   regBWriteToBus: false,
   regBReadContentsFromBus: false,
+  reg4BitMode: false, // true = only READ 4 least significant bits from bus.
 
   // RAM
   ramMemoryAddressRegisterReadFromBus: false, // Read MAR from bus
@@ -22,6 +23,7 @@ const controlLineModel = {
 
   // ALU
   aluSubtractionEnabled: false, // false = addition mode
+  aluSetFlagsRegisterOnResult: false,
   aluWriteResultToBus: false, // write calc result to bus
 
   // CONTROL LOGIC

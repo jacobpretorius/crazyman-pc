@@ -83,9 +83,16 @@ export default {
       fullSetBus: 'FULL_SET_BUS',
     }),
     loadRegisterFromBus() {
+      let tempBus = [...this.bus].fill(false);
+      for (let i = 0; i < 4; i++) {
+        tempBus[i] = this.bus[i]
+      }
+
       this.setRegister({
         registerName: this.registerName,
-        value: [...this.bus],
+        value: this.controlLines.reg4BitMode 
+          ? tempBus 
+          : [...this.bus],
       });
     },
     writeRegisterToBus() {

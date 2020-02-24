@@ -109,7 +109,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['bus', 'memory' ,'clockHigh', 'controlLines', 'registers']),
+    ...mapState(['bus', 'memory' ,'clockHigh', 'controlLines', 'registers', 'flagsRegister']),
     programRegisterDisplay() {
       return [...this.programRegister].reverse();
     },
@@ -237,9 +237,10 @@ export default {
         }
       }
 
-      // ADD
+      // ADD TODO: change result type
       if (this.activeVerb === 'ADD') {
         if (activeStep === 2) {
+          this.setControlLineHigh('aluSetFlagsRegisterOnResult');
           this.setControlLineHigh('aluWriteResultToBus');
         }
 
@@ -248,8 +249,67 @@ export default {
         }
       }
 
+      // SUB TODO: change result type
+      if (this.activeVerb === 'SUB') {
+        if (activeStep === 2) {
+          this.setControlLineHigh('aluSetFlagsRegisterOnResult');
+          this.setControlLineHigh('aluSubtractionEnabled');
+          this.setControlLineHigh('aluWriteResultToBus');
+        }
+
+        if (activeStep === 3) {
+          this.setControlLineHigh('regAReadContentsFromBus');
+        }
+      }
+
+      // STA
+      if (this.activeVerb === 'STA') {
+        if (activeStep === 2) {
+          this.setControlLineHigh('ramMemoryAddressRegisterReadFromBus');
+        }
+
+        if (activeStep === 3) {
+          this.setControlLineHigh('regAWriteToBus');
+          this.setControlLineHigh('ramReadMemoryContentsFromBus');
+        }
+      }
+
+      // LDI
+      if (this.activeVerb === 'LDI') {
+        if (activeStep === 2) {
+          this.setControlLineHigh('reg4BitMode');
+          this.setControlLineHigh('regAReadContentsFromBus');
+        }
+      }
+
       // JMP
       if (this.activeVerb === 'JMP') {
+        if (activeStep === 2) {
+          this.setControlLineHigh('clWriteInstructionRegisterToBus');
+        }
+
+        if (activeStep === 3) {
+          this.setControlLineHigh('pcReadFromBus');
+        }
+      }
+
+      // JPC
+      if (this.activeVerb === 'JPC') {
+        if (this.flagsRegister[1] === false) return;
+
+        if (activeStep === 2) {
+          this.setControlLineHigh('clWriteInstructionRegisterToBus');
+        }
+
+        if (activeStep === 3) {
+          this.setControlLineHigh('pcReadFromBus');
+        }
+      }
+
+      // JPZ
+      if (this.activeVerb === 'JPZ') {
+        if (this.flagsRegister[0] === false) return;
+
         if (activeStep === 2) {
           this.setControlLineHigh('clWriteInstructionRegisterToBus');
         }

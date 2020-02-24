@@ -7,14 +7,28 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     bus: [false, false, false, false, false, false, false, false],
+    
+    // Set from "Register" components
     registers: {},
+
+    // Pulsed using the Clock
     clockHigh: false,
-    controlLines: controlLineModel,
+    
+    // The RAM
     memory: {},
 
-    // Used ONLY for the info panel / educational purposes.
+    // Control Logic makes the PC do magic
+    controlLines: controlLineModel,
+
+    // Flags to store special states. Also see FLAGS.md
+    //           [ZERO, CARRY, unused, unused]
+    flagsRegister: [false, false, false, false],
+
+
+    // Used ONLY for the info panel / educational purposes / Compiler.
+    // Computer execution relies on PC set/read from bus like in a real pc.
     infoPanelObject: {
-      pcClone: 0, // Computer relies on PC set/read from bus like in a real pc.
+      pcClone: 0, 
     },
   },
   mutations: {
@@ -33,13 +47,23 @@ export default new Vuex.Store({
       Vue.set(state, 'clockHigh', payload);
     },
 
-    // REGISTERS
+    // CPU REGISTERS
     SET_REGISTER: (state, payload) => {
       Vue.set(state.registers, payload.registerName, payload.value);
     },
     RESET_REGISTER: (state, payload) => {
       Vue.set(state.registers, payload, [
         false, false, false, false, false, false, false, false,
+      ]);
+    },
+
+    // FLAGS REGISTER
+    SET_FLAGS_REGISTER: (state, payload) => {
+      Vue.set(state, 'flagsRegister', payload.slice());
+    },
+    RESET_FLAGS_REGISTER: (state) => {
+      Vue.set(state, 'flagsRegister', [
+        ...[false, false, false, false],
       ]);
     },
 
