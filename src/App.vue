@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link>
-      <a class="nav-link" href="https://github.com/jacobpretorius/crazyman-cpu" target="_blank">Github</a>
+      <a class="nav-link" href="https://github.com/jacobpretorius/crazyman-pc" target="_blank">Github</a>
     </div>
     <div class="body">
       <router-view />
