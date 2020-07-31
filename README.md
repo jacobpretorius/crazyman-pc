@@ -6,7 +6,7 @@ Long term we could take that PC simulation to the next level by adding in contro
 
 Basically all the difficult PC simulation problems has been done for us and we need to duplicate their efforts in JS/Vue/Vuex.
 
-You can see it running here https://crazyman-cpu.netlify.com/
+You can see it running here https://crazyman-pc.netlify.app/
 
 ## Verbs
 What can it do?
