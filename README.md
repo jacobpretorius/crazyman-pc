@@ -1,4 +1,4 @@
-# Crazyman-CPU
+# Crazyman-PC
 
 The idea here is to build a bitwise PC simulation essentially modelled on the fantastic breadboard pc video series by [Ben Eater on Youtube](https://www.youtube.com/watch?v=HyznrdDSSGM&list=PLowKtXNTBypGqImE405J2565dvjafglHU). 
 
