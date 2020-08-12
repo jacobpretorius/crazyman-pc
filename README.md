@@ -8,6 +8,8 @@ Basically all the difficult PC simulation problems has been done for us and we n
 
 You can see it running here https://crazyman-pc.netlify.app/
 
+Some extra guide info here https://projects.jcpretorius.com/crazyman-pc
+
 ## Verbs
 What can it do?
 
